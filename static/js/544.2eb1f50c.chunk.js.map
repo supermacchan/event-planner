@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/544.2eb1f50c.chunk.js","mappings":"sIAOA,UAPa,WACT,OACIA,EAAAA,EAAAA,KAAAC,EAAAA,SAAA,GAGR,C","sources":["pages/Home/Home.jsx"],"sourcesContent":["const Home = () => {\n    return (\n        <>\n        </>\n    )\n}\n\nexport default Home;"],"names":["_jsx","_Fragment"],"sourceRoot":""}
