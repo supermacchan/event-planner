@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/76.2a2b0084.chunk.js","mappings":"oIAOA,UAPe,WACX,OACIA,EAAAA,EAAAA,KAAAC,EAAAA,SAAA,GAGR,C","sources":["pages/Create/Create.jsx"],"sourcesContent":["const Create = () => {\n    return (\n        <>\n        </>\n    )\n}\n\nexport default Create;"],"names":["_jsx","_Fragment"],"sourceRoot":""}
