@@ -13,6 +13,7 @@ code {
 }
 
 :root {
+  --bg: #FEFCFF;
   --white: #fff;
   --black: #000;
   --purple: #7B61FF;
