@@ -10,7 +10,7 @@ import image8 from "../images/events/image8.jpg";
 export const events = [
     {
         id: 1,
-        name: "Galery Opening",
+        name: "Gallery Opening",
         description: "Discover an enchanting evening celebrating the world of art at our exclusive gallery opening.",
         category: "art",
         priority: "high",

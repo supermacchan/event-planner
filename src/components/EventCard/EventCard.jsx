@@ -1,3 +1,17 @@
+import { useState, useEffect } from "react";
+import { 
+    Card,
+    Filters,
+    Category,
+    Priority,
+    ImageContainer,
+    Image,
+    Info,
+    Title,
+    Description,
+    Button
+} from "./EventCard.styled"
+
 export const EventCard = ({ event: { 
     name, 
     description, 
@@ -8,21 +22,45 @@ export const EventCard = ({ event: {
     time, 
     photo 
 } }) => {
+    const [color, setColor] = useState(null);
+
+    useEffect(() => {
+        switch (priority) {
+            case "high":
+                setColor("#FF2B77");
+                break;
+            case "medium": 
+                setColor("#E2A300");
+                break;
+            case "low": 
+                setColor("#6BD475");
+                break;
+            default:
+                return;
+        }
+    }, [priority])
 
     return (
-        <div>
-            <span>{category}</span>
-            <span>{priority}</span>
-            <img src={photo} alt={name} />
-            <div>
+        <Card>
+            <Filters>
+                <Category>{category}</Category>
+                <Priority style={{color: color}}>{priority}</Priority>
+            </Filters>
+            
+            <ImageContainer>
+                <Image src={photo} alt={name} />
+            </ImageContainer>
+
+            <Info>
                 <span>
                     {date} at {time}
                 </span>
                 <span>{place}</span>
-            </div>
-            <h3>{name}</h3>
-            <p>{description}</p>
-            <button type="button">More Info</button>
-        </div>
+            </Info>
+
+            <Title>{name}</Title>
+            <Description>{description}</Description>
+            <Button type="button">More Info</Button>
+        </Card>
     )
 }

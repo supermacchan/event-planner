@@ -4,7 +4,11 @@ body {
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #fff;
+
+  background-color: #FEFCFF;
+  background-image: url("./images/bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 code {
@@ -47,4 +51,9 @@ ol {
 
 a {
   text-decoration: none;
+}
+
+button,
+input {
+  font-family: inherit;
 }
