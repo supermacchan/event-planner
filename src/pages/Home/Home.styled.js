@@ -12,7 +12,7 @@ export const Main = styled.main`
 
     @media screen and (min-width: 1280px) {
         max-width: 1280px;
-        padding: 60px 80px;
+        padding: 60px 0;
     }
 `
 
@@ -83,6 +83,7 @@ export const CardList = styled.ul`
 
     @media screen and (min-width: 768px) {
         grid-template-columns: repeat(2, 1fr);
+        margin-top: 24px;
     }
 
     @media screen and (min-width: 1280px) {

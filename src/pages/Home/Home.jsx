@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { PageTitle } from "components/PageTitle/PageTitle";
 import { Filters } from "components/Filters/Filters";
 import { EventCard } from "components/EventCard/EventCard";
+import { Pagination } from "components/Pagination/Pagination";
 import { AiOutlinePlus } from "react-icons/ai";
 import { 
     Main,
@@ -68,6 +69,8 @@ const Home = () => {
             <CardList> 
                 {events.map(event => <li key={event.id}><EventCard event={event}/></li>)}
             </CardList>
+
+            <Pagination isMobile={isMobile}/>
         </Main>
     )
 }

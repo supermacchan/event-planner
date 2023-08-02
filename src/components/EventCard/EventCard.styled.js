@@ -4,6 +4,8 @@ export const Card = styled.div`
     position: relative;
     
     width: 271px;
+    height: 480px;
+
     border-radius: 12px;
     background-color: var(--white);
     box-shadow: 2px 4px 9px 0px rgba(166, 141, 174, 0.28);
@@ -14,6 +16,14 @@ export const Card = styled.div`
 
     @media screen and (min-width: 1280px) {
         width: 302px;
+    }
+
+    transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+        box-shadow: -2.5777px 6.87386px 20.6216px rgba(0, 0, 0, 0.63);
+        transform: scale(1.03);
     }
 `
 
@@ -56,10 +66,18 @@ export const ImageContainer = styled.div`
 
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
+
+    @media screen and (min-width: 768px) {
+        width: 332px;
+    }
+
+    @media screen and (min-width: 1280px) {
+        width: 302px;
+    }
 `
 
 export const Image = styled.img`
-    width: 271px;
+    width: 100%;
     height: 336px;
 
     object-fit: cover;
