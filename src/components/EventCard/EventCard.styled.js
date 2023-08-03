@@ -60,6 +60,8 @@ export const Priority = styled.span`
 `
 
 export const ImageContainer = styled.div`
+    position: relative;
+
     width: 271px;
     height: 336px;
     overflow: hidden;
@@ -85,7 +87,7 @@ export const Image = styled.img`
 
 export const Info = styled.div`
     position: absolute;
-    top: 296px;
+    bottom: 0;
     left: 0;
 
     width: 100%;
@@ -122,5 +124,25 @@ export const Description = styled.p`
 `
 
 export const Button = styled.button`
-    display: none;
+    cursor: pointer;
+
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+
+    padding: 10px 24px;
+
+    border: none;
+    border-radius: 8px;
+    background-color: var(--purple);
+    color: var(--white);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.42;
 `

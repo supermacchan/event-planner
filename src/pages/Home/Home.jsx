@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import { PageTitle } from "components/PageTitle/PageTitle";
 import { Filters } from "components/Filters/Filters";
 import { EventCard } from "components/EventCard/EventCard";
@@ -49,14 +50,16 @@ const Home = () => {
             <Menu>
                 <Buttons>
                     <Filters isMobile={isMobile}/>
-                    <AddButton type="button">
-                        <AiOutlinePlus 
-                            style={{width: 24, height: 24}} 
-                        /> 
-                        {!isMobile && 
-                            <ButtonText>Add new event</ButtonText>
-                        }
-                    </AddButton>
+                    <Link to={"/create"} >
+                        <AddButton type="button">
+                            <AiOutlinePlus 
+                                style={{width: 24, height: 24}} 
+                            /> 
+                            {!isMobile && 
+                                <ButtonText>Add new event</ButtonText>
+                            }
+                        </AddButton>
+                    </Link>
                 </Buttons>
 
                 {!isMobile && 

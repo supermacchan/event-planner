@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import { 
     Card,
     Filters,
@@ -13,6 +14,7 @@ import {
 } from "./EventCard.styled"
 
 export const EventCard = ({ event: { 
+    id,
     name, 
     description, 
     category, 
@@ -23,6 +25,7 @@ export const EventCard = ({ event: {
     photo 
 } }) => {
     const [color, setColor] = useState(null);
+    const [more, setMore] = useState(false);
 
     useEffect(() => {
         switch (priority) {
@@ -40,27 +43,37 @@ export const EventCard = ({ event: {
         }
     }, [priority])
 
+    const handleCardClick = () => {
+        setMore(prevstate => !prevstate);
+    }
+
     return (
-        <Card>
+        <Card onClick={handleCardClick}>
             <Filters>
                 <Category>{category}</Category>
                 <Priority style={{color: color}}>{priority}</Priority>
             </Filters>
             
-            <ImageContainer>
+            <ImageContainer style={{height: more ? "280px" : "336px"}}>
                 <Image src={photo} alt={name} />
-            </ImageContainer>
 
-            <Info>
-                <span>
-                    {date} at {time}
-                </span>
-                <span>{place}</span>
-            </Info>
+                <Info>
+                    <span>
+                        {date} at {time}
+                    </span>
+                    <span>{place}</span>
+                </Info>
+            </ImageContainer>
 
             <Title>{name}</Title>
             <Description>{description}</Description>
-            <Button type="button">More Info</Button>
+
+            {more && 
+                <Link to={`/event/${id}`}>
+                    <Button type="button">More Info</Button>
+                </Link>
+            }
+            
         </Card>
     )
 }

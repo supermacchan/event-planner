@@ -19,7 +19,7 @@ function App() {
           <Route index element={<Home />} />
             <Route path='create' element={<Create />} />
             <Route path='event/:id' element={<Event />} />
-            <Route path='edit' element={<Edit />} />
+            <Route path='edit/:id' element={<Edit />} />
           {/* 404 Not Found Page with delayed redirect */}
           <Route path="*" element={
             <NotFoundPage component={NotFound} redirectTo="/" />

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { CiSearch } from "react-icons/ci";
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
@@ -21,7 +22,10 @@ export const Header = () => {
     return (
         <HeaderContainer>
             <Content>
-                <Title>Event Planner</Title>
+                <Link to={"/"}>
+                    <Title>Event Planner</Title>
+                </Link>
+                
                 <Dropdown 
                     options={options} 
                     value={defaultOption} 
