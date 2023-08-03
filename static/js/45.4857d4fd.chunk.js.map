@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/45.4857d4fd.chunk.js","mappings":"oIAOA,UAPa,WACT,OACIA,EAAAA,EAAAA,KAAAC,EAAAA,SAAA,GAGR,C","sources":["pages/Edit/Edit.jsx"],"sourcesContent":["const Edit = () => {\n    return (\n        <>\n        </>\n    )\n}\n\nexport default Edit;"],"names":["_jsx","_Fragment"],"sourceRoot":""}
