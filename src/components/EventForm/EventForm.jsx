@@ -1,4 +1,14 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { 
+    Form,
+    Container,
+    Label,
+    Input,
+    TextArea,
+    Enabled,
+    Disabled,
+    Button
+} from "./EventForm.styled";
 
 export const EventForm = () => {
     const location = useLocation();
@@ -19,121 +29,139 @@ export const EventForm = () => {
     }
 
     return (
-        <form onSubmit={handleFormSubmit}>
-            {/* title */}
-            <label 
-                htmlFor="title"
-            >
-                Title
-            </label>
-            <input 
-                type="text"
-                id="title" 
-                name="title" 
-                required
-            />
+        <Form onSubmit={handleFormSubmit}>
+            <Container>
+                {/* title */}
+                <Enabled>
+                    <Label 
+                        htmlFor="title"
+                    >
+                        Title
+                    </Label>
+                    <Input 
+                        type="text"
+                        id="title" 
+                        name="title" 
+                        required
+                    />
+                </Enabled>
+                
+                {/* description */}
+                <Enabled>
+                    <Label 
+                        htmlFor="description"
+                    >
+                        Description
+                    </Label>
+                    <TextArea 
+                        type="text"
+                        id="description" 
+                        name="description" 
+                        required
+                    ></TextArea>
+                </Enabled>
+                
+                {/* date */}
+                <Enabled>
+                    <Label 
+                        htmlFor="date"
+                    >
+                        Select date
+                    </Label>
+                    <Input 
+                        type="date"
+                        id="date" 
+                        name="date" 
+                        required
+                    />
+                </Enabled>
 
-            {/* description */}
-            <label 
-                htmlFor="description"
-            >
-                Description
-            </label>
-            <textarea 
-                type="text"
-                id="description" 
-                name="description" 
-                required
-            ></textarea>
+                {/* time */}
+                <Enabled>
+                    <Label 
+                        htmlFor="time"
+                    >
+                        Select time
+                    </Label>
+                    <Input 
+                        type="time"
+                        id="time" 
+                        name="time" 
+                        required
+                    />
+                </Enabled>
 
-            {/* date */}
-            <label 
-                htmlFor="date"
-            >
-                Select date
-            </label>
-            <input 
-                type="date"
-                id="date" 
-                name="date" 
-                required
-            />
+                {/* location */}
+                <Enabled>
+                    <Label 
+                        htmlFor="location"
+                    >
+                        Location
+                    </Label>
+                    <Input 
+                        type="text"
+                        id="location" 
+                        name="location" 
+                        required
+                    />
+                </Enabled>
+                
+                {/* category - dropdown */}
+                <Disabled>
+                    <Label 
+                        htmlFor="category"
+                    >
+                        Category
+                    </Label>
+                    <Input 
+                        type="text"
+                        id="category" 
+                        name="category" 
+                        disabled
+                    />
+                </Disabled>
 
-            {/* time */}
-            <label 
-                htmlFor="time"
-            >
-                Select time
-            </label>
-            <input 
-                type="time"
-                id="time" 
-                name="time" 
-                required
-            />
+                {/* image */}
+                <Disabled>
+                    <Label 
+                        htmlFor="image"
+                    >
+                        Add picture
+                    </Label>
+                    <Input 
+                        type="file"
+                        id="image" 
+                        name="image" 
+                        disabled
+                    />
+                    {/* div to overlap over the file input */}
+                    <div></div>
+                </Disabled>
 
-            {/* location */}
-            <label 
-                htmlFor="location"
-            >
-                Location
-            </label>
-            <input 
-                type="text"
-                id="location" 
-                name="location" 
-                required
-            />
-
-            {/* category - dropdown */}
-            <label 
-                htmlFor="category"
-            >
-                Category
-            </label>
-            <input 
-                type="text"
-                id="category" 
-                name="category" 
-                disabled
-            />
-
-            {/* image */}
-            <label 
-                htmlFor="image"
-            >
-                Add picture
-            </label>
-            <input 
-                type="file"
-                id="image" 
-                name="image" 
-                disabled
-            />
-            {/* div to overlap over the file input */}
-            <div></div>
-
-            {/* priority - dropdown*/}
-            <label 
-                htmlFor="priority"
-            >
-                Priority
-            </label>
-            <input 
-                type="text"
-                id="priority" 
-                name="priority" 
-                disabled
-            />
-
+                {/* priority - dropdown*/}
+                <Disabled>
+                    <Label 
+                        htmlFor="priority"
+                    >
+                        Priority
+                    </Label>
+                    <Input 
+                        type="text"
+                        id="priority" 
+                        name="priority" 
+                        disabled
+                    />
+                </Disabled>
+            </Container>
+        
             {/* adjust text depending on the location */}
-            <button type="submit">
+            <Button type="submit">
                 {
                     location.pathname === '/create'
                     ? "Add event"
                     : "Save"
                 }
-            </button>
-        </form>
+            </Button>
+        </Form>
     )
 }
