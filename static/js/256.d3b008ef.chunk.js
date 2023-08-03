@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkevent_planner=self.webpackChunkevent_planner||[]).push([[256],{9256:function(e,n,t){t.r(n);var r=t(184);n.default=function(){return(0,r.jsx)(r.Fragment,{})}}}]);
-//# sourceMappingURL=256.d3b008ef.chunk.js.map
