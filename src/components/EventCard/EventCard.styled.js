@@ -31,6 +31,7 @@ export const Filters = styled.div`
     position: absolute;
     top: 12px;
     left: 12px;
+    z-index: 12;
 
     display: flex;
     align-items: center;

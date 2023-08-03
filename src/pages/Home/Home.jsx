@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
+import { Main } from "components/Main/Main";
 import { PageTitle } from "components/PageTitle/PageTitle";
 import { Filters } from "components/Filters/Filters";
 import { EventCard } from "components/EventCard/EventCard";
 import { Pagination } from "components/Pagination/Pagination";
 import { AiOutlinePlus } from "react-icons/ai";
 import { 
-    Main,
     Menu,
     Buttons,
     AddButton,

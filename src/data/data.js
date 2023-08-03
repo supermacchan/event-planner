@@ -16,7 +16,7 @@ export const events = [
         priority: "high",
         place: "Kyiv",
         date: "12.07",
-        time: "12:00",
+        time: "12:00 am",
         photo: image1
     },
     {
@@ -27,7 +27,7 @@ export const events = [
         priority: "medium",
         place: "Kyiv",
         date: "12.07",
-        time: "12:00",
+        time: "12:00 am",
         photo: image2
     },
     {
@@ -38,7 +38,7 @@ export const events = [
         priority: "high",
         place: "Kyiv",
         date: "12.07",
-        time: "12:00",
+        time: "12:00 am",
         photo: image3
     },
     {
@@ -49,7 +49,7 @@ export const events = [
         priority: "high",
         place: "Kyiv",
         date: "12.07",
-        time: "12:00",
+        time: "12:00 am",
         photo: image4
     },
     {
@@ -60,7 +60,7 @@ export const events = [
         priority: "medium",
         place: "Kyiv",
         date: "12.07",
-        time: "12:00",
+        time: "12:00 am",
         photo: image5
     },
     {
@@ -71,7 +71,7 @@ export const events = [
         priority: "low",
         place: "Kyiv",
         date: "12.07",
-        time: "12:00",
+        time: "12:00 am",
         photo: image6
     },
     {
@@ -82,7 +82,7 @@ export const events = [
         priority: "high",
         place: "Kyiv",
         date: "12.07",
-        time: "12:00",
+        time: "12:00 am",
         photo: image7
     },
     {
@@ -93,7 +93,7 @@ export const events = [
         priority: "low",
         place: "Kyiv",
         date: "12.07",
-        time: "12:00",
+        time: "12:00 am",
         photo: image8
     }
 ]

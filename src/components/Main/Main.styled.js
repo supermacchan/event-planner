@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
-export const Main = styled.main`
+export const MainContainer = styled.main`
+    display: flex;
+    flex-direction: column;
+
     padding: 40px 24px;
     margin: 0 auto;
     max-width: 320px;
