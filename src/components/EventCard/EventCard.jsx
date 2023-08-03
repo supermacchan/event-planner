@@ -69,7 +69,7 @@ export const EventCard = ({ event: {
             <Description>{description}</Description>
 
             {more && 
-                <Link to={`/event/${id}`}>
+                <Link to={`/event/${id}`} >
                     <Button type="button">More Info</Button>
                 </Link>
             }

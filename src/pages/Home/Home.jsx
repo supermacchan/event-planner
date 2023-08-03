@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Main } from "components/Main/Main";
 import { PageTitle } from "components/PageTitle/PageTitle";
 import { Filters } from "components/Filters/Filters";
@@ -18,6 +18,7 @@ import { events } from "data/data";
 const Home = () => {
     const [windowWidth, setWindowWidth] = useState(null);
     const [isMobile, setIsMobile] = useState(true);
+    const location = useLocation();
 
     // tracking window size (for changing screen orientation on mobile devices)
     useEffect(() => {
@@ -50,7 +51,10 @@ const Home = () => {
             <Menu>
                 <Buttons>
                     <Filters isMobile={isMobile}/>
-                    <Link to={"/create"} >
+                    <Link 
+                        to={"/create"} 
+                        state={{ from: location.state?.from ?? "/" }}
+                    >
                         <AddButton type="button">
                             <AiOutlinePlus 
                                 style={{width: 24, height: 24}} 

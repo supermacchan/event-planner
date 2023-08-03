@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useLocation  } from 'react-router-dom';
 import { 
     Card,
     ImageContainer,
@@ -26,6 +26,7 @@ export const EventInfo = ({ event: {
     photo 
 } }) => {
     const [color, setColor] = useState(null);
+    const location = useLocation();
 
     useEffect(() => {
         switch (priority) {
@@ -60,7 +61,10 @@ export const EventInfo = ({ event: {
             </Info>
 
             <Actions>
-                <Link to={`/edit/${id}`}>
+                <Link 
+                    to={`/edit/${id}`}
+                    state={{ from: location.state?.from ?? `/event/${id}` }}
+                >
                     <EditButton type="button">Edit</EditButton>
                 </Link>
                 <DeleteButton type="button">Delete event</DeleteButton>
