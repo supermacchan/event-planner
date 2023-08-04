@@ -1,11 +1,16 @@
 import { DayPicker } from 'react-day-picker';
+import { format } from 'date-fns';
 import css from './DatePicker.module.css';
+
+// Function to reformat day names to show in first three letters
+const formatWeekdayName = (day) => format(day, 'EEE');
 
 export const DatePicker = ({
     startDate, 
     onSelect,
     onClose,
-    onSave
+    onSave,
+    onDayClick
 }) => {
     const classNames = {
         caption: css.caption,
@@ -30,6 +35,7 @@ export const DatePicker = ({
                 mode="single"
                 onSelect={onSelect}
                 classNames={classNames}
+                formatters={{formatWeekdayName}}
             />
 
             <div className={css.actions}>
