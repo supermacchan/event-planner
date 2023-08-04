@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DatePicker } from "./DatePicker/DatePicker";
 import { convertDateFormat } from "utils/convertDateFormat";
+import { MdClose, MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
+import { nanoid } from "nanoid";
+import { toast } from "react-toastify";
 import css from "./EventForm.module.css";
-
-// import defaultImage from "../../images/events/default2.png";
+import defaultImage from "../../images/events/default2.png";
 
 export const EventForm = ({ event }) => {
     const location = useLocation();
@@ -91,11 +93,60 @@ export const EventForm = ({ event }) => {
         setShowDatePicker(false);
     }
 
+    const collectData = () => {
+        const newEvent = {
+            id: nanoid(),
+            name: title,
+            description,
+            category,
+            priority,
+            place,
+            date,
+            time,
+            photo: defaultImage
+        }
+
+        return newEvent;
+    }
+
+    const formValidation = () => {
+        const form =  document.getElementById("form");
+        const inputs = form.querySelectorAll("input");
+        
+        const validate = Array.from(inputs).every(i => i.value.trim());
+        console.log(validate);
+
+        if (!validate) {
+            inputs.forEach(function(input) {
+            // Check if the input is empty (no value entered)
+            if (!input.value.trim()) {
+                    input.setCustomValidity("This field is required.");
+                } else {
+                    input.setCustomValidity("");
+                }
+            });
+
+            return false;
+        }
+
+        return true;
+    }
+
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
-        // add notification 
+        const validate = formValidation();
+
+        if (!validate) {
+            toast.error("Please fill out all the required fields!");
+            return;
+        }
+
+        const newEvent = collectData();
+        console.log(newEvent);
         
+        toast.success("A new event has been created!");
+
         if (location.pathname === '/create') {
             navigate('/');
         }
@@ -106,7 +157,7 @@ export const EventForm = ({ event }) => {
     }
 
     return (
-        <form className={css.form} onSubmit={handleFormSubmit}>
+        <form className={css.form} id="form" onSubmit={handleFormSubmit}>
             <div className={css.container}>
 
                 <div className={css.enabled}>
@@ -121,10 +172,17 @@ export const EventForm = ({ event }) => {
                         type="text"
                         id="title" 
                         name="title" 
-                        required
+                        pattern="[A-Z][A-Za-z0-9 ]*"
                         value={title}
                         onChange={handleInputChange}
                     />
+                    <button 
+                        type="button" 
+                        className={css.inputBtn} 
+                        onClick={() => setTitle('')}
+                    >
+                        <MdClose style={{width: 18, height: 18}} />
+                    </button>
                 </div>
                 
                 <div className={css.enabled}>
@@ -139,10 +197,16 @@ export const EventForm = ({ event }) => {
                         type="text"
                         id="description" 
                         name="description" 
-                        required
                         value={description}
                         onChange={handleInputChange}
                     ></textarea>
+                    <button 
+                        type="button" 
+                        className={css.inputBtn} 
+                        onClick={() => setDescription('')}
+                    >
+                        <MdClose style={{width: 18, height: 18}} />
+                    </button>
                 </div>
                 
                 <div className={css.enabled} 
@@ -160,11 +224,21 @@ export const EventForm = ({ event }) => {
                         id="date" 
                         name="date" 
                         pattern="/^\d{2}\.\d{2}\.\d{4}$/"
-                        required
+                        placeholder="Choose a date"
                         value={date}
                         onChange={handleInputChange}
                         onClick={() => setShowDatePicker(true)}
                     />
+                    <button 
+                        type="button" 
+                        className={css.inputBtn} 
+                        onClick={() => setShowDatePicker(prevState => !prevState)}
+                    >
+                        {showDatePicker 
+                            ? <MdKeyboardArrowUp style={{width: 24, height: 24}}/>
+                            : <MdKeyboardArrowDown style={{width: 24, height: 24}} />
+                        }
+                    </button>
                     
                     {showDatePicker && 
                         <div className={css.calendar}>
@@ -190,10 +264,16 @@ export const EventForm = ({ event }) => {
                         type="time"
                         id="time" 
                         name="time" 
-                        required
                         value={time}
                         onChange={handleInputChange}
                     />
+                    <button 
+                        type="button" 
+                        className={css.inputBtn} 
+                        // onClick={() => setKeywords('')}
+                    >
+                        <MdKeyboardArrowDown style={{width: 24, height: 24}} />
+                    </button>
                 </div>
 
                 <div className={css.enabled}>
@@ -208,11 +288,17 @@ export const EventForm = ({ event }) => {
                         type="text"
                         id="location" 
                         name="location" 
-                        pattern="/^[A-Za-z\s]+$/"
-                        required
+                        pattern="[A-Z][A-Za-z ]*"
                         value={place}
                         onChange={handleInputChange}
                     />
+                    <button 
+                        type="button" 
+                        className={css.inputBtn} 
+                        onClick={() => setPlace('')}
+                    >
+                        <MdClose style={{width: 18, height: 18}} />
+                    </button>
                 </div>
                 
                 {/* category - dropdown */}
@@ -228,10 +314,18 @@ export const EventForm = ({ event }) => {
                         type="text"
                         id="category" 
                         name="category" 
+                        placeholder="Select category"
                         disabled
                         value={category}
                         onChange={handleInputChange}
                     />
+                    <button 
+                        type="button" 
+                        className={css.inputBtn} 
+                        // onClick={() => setKeywords('')}
+                    >
+                        <MdKeyboardArrowDown style={{width: 24, height: 24}} />
+                    </button>
                 </div>
 
                 {/* image */}
@@ -250,7 +344,16 @@ export const EventForm = ({ event }) => {
                         disabled
                     />
                     {/* div to overlap over the file input */}
-                    <div></div>
+                    <div className={css.fakeInput}>
+                        <span className={css.fakePlaceholder}>Select image</span>
+                    </div>
+                    <button 
+                        type="button" 
+                        className={css.inputBtn} 
+                        // onClick={() => setImage('')}
+                    >
+                        <MdClose style={{width: 18, height: 18}} />
+                    </button>
                 </div>
 
                 {/* priority - dropdown*/}
@@ -266,10 +369,18 @@ export const EventForm = ({ event }) => {
                         type="text"
                         id="priority" 
                         name="priority" 
+                        placeholder="Select priority"
                         disabled
                         value={priority}
                         onChange={handleInputChange}
                     />
+                    <button 
+                        type="button" 
+                        className={css.inputBtn} 
+                        // onClick={() => setKeywords('')}
+                    >
+                        <MdKeyboardArrowDown style={{width: 24, height: 24}} />
+                    </button>
                 </div>
             </div>
         

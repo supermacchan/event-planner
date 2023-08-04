@@ -6,7 +6,7 @@ export const BackButton = () => {
     const location = useLocation();
 
     return (
-        <Link to={location.state?.from ?? '/'}>
+        <Link to={location.state?.from ?? '/'} style={{width: 65}}>
             <button className={css.button} type='button'>
                 <AiOutlineArrowLeft style={{width: 18, height: 18}} />
                 Back

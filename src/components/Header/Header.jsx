@@ -4,7 +4,7 @@ import { CiSearch } from "react-icons/ci";
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import css from "./Header.module.css";
-import { MdClose } from "react-icons/md"
+import { MdClose } from "react-icons/md";
 import { AiOutlineDown } from "react-icons/ai";
 
 export const Header = () => {
