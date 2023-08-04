@@ -79,6 +79,19 @@ export const EventForm = ({ event }) => {
         }
     }
 
+    const toggleDataPicker = () => {
+        const form =  document.getElementById("form");
+        const dateInput = form.querySelector("#date");
+
+        if (showDatePicker) {
+            dateInput.blur();
+        } else {
+            dateInput.focus();
+        }
+
+        setShowDatePicker(prevState => !prevState)
+    }
+
     const handleDateChange = (date) => {
         setStartDate(date);
     }
@@ -144,7 +157,7 @@ export const EventForm = ({ event }) => {
 
         const newEvent = collectData();
         console.log(newEvent);
-        
+
         toast.success("A new event has been created!");
 
         if (location.pathname === '/create') {
@@ -223,16 +236,18 @@ export const EventForm = ({ event }) => {
                         type="text"
                         id="date" 
                         name="date" 
-                        pattern="/^\d{2}\.\d{2}\.\d{4}$/"
-                        placeholder="Choose a date"
+                        // pattern="/^\d{2}\.\d{2}\.\d{4}$/"
+                        placeholder="Select date"
                         value={date}
                         onChange={handleInputChange}
                         onClick={() => setShowDatePicker(true)}
+                        style={{caretColor: "transparent"}}
                     />
                     <button 
                         type="button" 
                         className={css.inputBtn} 
-                        onClick={() => setShowDatePicker(prevState => !prevState)}
+                        style={{width: "90%", justifyContent: "right"}}
+                        onClick={toggleDataPicker}
                     >
                         {showDatePicker 
                             ? <MdKeyboardArrowUp style={{width: 24, height: 24}}/>
