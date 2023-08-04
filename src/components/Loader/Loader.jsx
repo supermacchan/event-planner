@@ -1,9 +1,9 @@
 import { Oval } from "react-loader-spinner";
-import { Container } from "./Loader.styled";
+import css from "./Loader.module.css";
 
 export const Loader = () => {
     return (
-        <Container>
+        <div className={css.container}>
             <Oval
                 height={80}
                 width={80}
@@ -16,6 +16,6 @@ export const Loader = () => {
                 strokeWidth={2}
                 strokeWidthSecondary={2}
             />
-        </Container>
+        </div>
     )
 }

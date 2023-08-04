@@ -4,7 +4,7 @@ import { Main } from "components/Main/Main";
 import { BackButton } from "components/BackButton/BackButton";
 import { PageTitle } from "components/PageTitle/PageTitle";
 import { EventInfo } from 'components/EventInfo/EventInfo';
-import { EventContainer } from './Event.styled';
+import css from "./Event.module.css";
 import { events } from "data/data";
 // import { toast } from 'react-toastify';
 
@@ -25,10 +25,10 @@ const Event = () => {
             <BackButton />
 
             {event && 
-                <EventContainer>
+                <div className={css.event}>
                     <PageTitle title={event.name} />
                     <EventInfo event={event}/>
-                </EventContainer> 
+                </div> 
             }
         </Main>
     )

@@ -6,13 +6,7 @@ import { Filters } from "components/Filters/Filters";
 import { EventCard } from "components/EventCard/EventCard";
 import { Pagination } from "components/Pagination/Pagination";
 import { AiOutlinePlus } from "react-icons/ai";
-import { 
-    Menu,
-    Buttons,
-    AddButton,
-    ButtonText,
-    CardList 
-} from "./Home.styled";
+import css from "./Home.module.css";
 import { events } from "data/data";
 
 const Home = () => {
@@ -48,34 +42,34 @@ const Home = () => {
 
     return (
         <Main>
-            <Menu>
-                <Buttons>
+            <div className={css.menu}>
+                <div className={css.buttons}>
                     <Filters isMobile={isMobile}/>
                     <Link 
                         to={"/create"} 
                         state={{ from: location.state?.from ?? "/" }}
                     >
-                        <AddButton type="button">
+                        <button type="button" className={css.addButton}>
                             <AiOutlinePlus 
                                 style={{width: 24, height: 24}} 
                             /> 
                             {!isMobile && 
-                                <ButtonText>Add new event</ButtonText>
+                                <span className={css.buttonText}>Add new event</span>
                             }
-                        </AddButton>
+                        </button>
                     </Link>
-                </Buttons>
+                </div>
 
                 {!isMobile && 
                     <PageTitle 
                         title="My events" 
                     />
                 }
-            </Menu>
+            </div>
             
-            <CardList> 
+            <ul className={css.cardList}> 
                 {events.map(event => <li key={event.id}><EventCard event={event}/></li>)}
-            </CardList>
+            </ul>
 
             <Pagination isMobile={isMobile}/>
         </Main>

@@ -1,17 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
-import { 
-    Card,
-    Filters,
-    Category,
-    Priority,
-    ImageContainer,
-    Image,
-    Info,
-    Title,
-    Description,
-    Button
-} from "./EventCard.styled"
+import css from "./EventCard.module.css";
 
 export const EventCard = ({ event: { 
     id,
@@ -25,7 +14,6 @@ export const EventCard = ({ event: {
     photo 
 } }) => {
     const [color, setColor] = useState(null);
-    const [more, setMore] = useState(false);
 
     useEffect(() => {
         switch (priority) {
@@ -43,37 +31,32 @@ export const EventCard = ({ event: {
         }
     }, [priority])
 
-    const handleCardClick = () => {
-        setMore(prevstate => !prevstate);
-    }
-
     return (
-        <Card onClick={handleCardClick}>
-            <Filters>
-                <Category>{category}</Category>
-                <Priority style={{color: color}}>{priority}</Priority>
-            </Filters>
+        <div className={css.card}>
             
-            <ImageContainer style={{height: more ? "280px" : "336px"}}>
-                <Image src={photo} alt={name} />
+            <div className={css.filters}>
+                <span className={css.category}>{category}</span>
+                <span className={css.priority} style={{color: color}}>{priority}</span>
+            </div>
+            
+            <div className={css.imageContainer}>
+                <img className={css.image} src={photo} alt={name} />
 
-                <Info>
+                <div className={css.info}>
                     <span>
                         {date} at {time}
                     </span>
                     <span>{place}</span>
-                </Info>
-            </ImageContainer>
+                </div>
+            </div>
 
-            <Title>{name}</Title>
-            <Description>{description}</Description>
+            <h3 className={css.title}>{name}</h3>
+            <p className={css.description}>{description}</p>
 
-            {more && 
-                <Link to={`/event/${id}`} >
-                    <Button type="button">More Info</Button>
-                </Link>
-            }
+            <Link to={`/event/${id}`} >
+                <button type="button" className={css.moreBtn}>More Info</button>
+            </Link>
             
-        </Card>
+        </div>
     )
 }

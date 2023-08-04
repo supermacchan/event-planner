@@ -1,12 +1,6 @@
 import { useState, useEffect } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import { 
-    Section,
-    PaginationContainer,
-    ArrowButton,
-    PagesContainer,
-    PageButton
-} from "./Pagination.styled";
+import css from "./Pagination.module.css";
 
 export const Pagination = ({ isMobile }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -29,69 +23,76 @@ export const Pagination = ({ isMobile }) => {
     }
 
     return (
-        <Section>
-            <PaginationContainer>
-                <ArrowButton 
+        <div className={css.pagination}>
+            <div className={css.container}>
+                <button 
+                    className={css.arrow}
                     type="button" 
                     disabled={currentPage === 1 ? true : false}
                 >
                     <AiOutlineLeft style={{width: 18, height: 18}} />
-                </ArrowButton>
-                    <PagesContainer>
+                </button>
+                    <ul className={css.pages}>
                         <li>
-                            <PageButton 
+                            <button
+                                className={css.page} 
                                 type="button"
                                 id="page"
                                 onClick={handlePageChange}
                             >
                                 1
-                            </PageButton>
+                            </button>
                         </li>
                         <li>
-                            <PageButton 
+                            <button
+                                className={css.page}  
                                 type="button"
                                 id="page"
                                 onClick={handlePageChange}
                             >
                                 2
-                            </PageButton>
+                            </button>
                         </li>
                         {!isMobile &&
                         <li>
-                            <PageButton 
+                            <button
+                                className={css.page}  
                                 type="button"
                                 id="page"
                                 onClick={handlePageChange}
                             >
                                 3
-                            </PageButton>
+                            </button>
                         </li>
                         }
                         <li>
-                            <PageButton 
+                            <button
+                                className={css.page}  
                                 type="button"
                             >
                                 ...
-                            </PageButton>
+                            </button>
                         </li>
                         <li>
-                            <PageButton 
+                            <button
+                                className={css.page}  
                                 type="button"
                                 id="page"
                                 onClick={handlePageChange}
                             >
                                 32
-                            </PageButton>
+                            </button>
                         </li>
-                    </PagesContainer>
-                <ArrowButton 
+                    </ul>
+                <button 
+                    className={css.arrow} 
                     type="button"
                     disabled={currentPage === 32 ? true : false}
                 >
                     <AiOutlineRight style={{width: 18, height: 18}} />
-                </ArrowButton>
-            </PaginationContainer>
-        </Section>
+                </button>
+            </div>
+        </div>
         
     )
 }

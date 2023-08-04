@@ -1,13 +1,11 @@
-import styled from 'styled-components';
-
-export const HeaderContainer = styled.header`
+.header {
     width: 100%;
 
     background-color: var(--bg);
     border-bottom: 1px solid var(--purple);
-`
+}
 
-export const Content = styled.div`
+.container {
     position: relative;
 
     display: flex;
@@ -28,16 +26,23 @@ export const Content = styled.div`
         max-width: 1280px;
         padding: 22px 0;
     }
-`
+}
 
-export const Title = styled.h1`
+.title {
     color: var(--purple);
     font-size: 24px;
     font-weight: 400;
     line-height: normal;
-`
 
-export const Search = styled.div`
+    transition: color 350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover,
+    &:focus {
+        color: var(--hover-purple);
+    }
+}
+
+.search {
     width: 272px;
     height: 48px;
     padding: 12px;
@@ -63,9 +68,9 @@ export const Search = styled.div`
         top: 22px;
         right: calc(80px + 69px + 24px);
     }
-`
+}
 
-export const Label = styled.label`
+.label {
     color: var(--purple);
     width: 24px;
     height: 24px;
@@ -73,16 +78,20 @@ export const Label = styled.label`
     display: flex;
     justify-content: center;
     align-items: center;
-`
+}
 
-export const Input = styled.input`
+.input {
     border: none;
     margin-left: 12px;
+
+    width: 100%;
 
     font-family: inherit;
     font-size: 14px;
     font-weight: 300;
     line-height: 1;
+
+    color: var(--purple);
 
     &::placeholder {
         color: #888;
@@ -90,4 +99,64 @@ export const Input = styled.input`
         font-weight: 300;
         line-height: 1;
     }
-`
+
+    &:focus {
+        outline: none;
+    }
+
+    &:not(:placeholder-shown) ~ button {
+        visibility: visible;
+    }
+}
+
+.clear {
+    visibility: hidden;
+
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    color: var(--purple);
+
+    width: 24px;
+    height: 24px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dropdown {
+    width: 69px;
+    height: 48px;
+    border-radius: 8px;
+    box-shadow: 2px 4px 9px 0px rgba(166, 141, 174, 0.28);
+}
+
+.control {
+    width: 69px;
+    height: 48px;
+    padding: 12px 4px 12px 12px;
+
+    border: none;
+    border-radius: 8px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.placeholder {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1;
+    text-align: center;
+    color: var(--dark-gray);
+}
+
+.menu {
+    border: none;
+}
+
+.arrow {
+    color: var(--dark-gray);
+}

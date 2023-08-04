@@ -1,19 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation  } from 'react-router-dom';
-import { 
-    Card,
-    ImageContainer,
-    Image,
-    Description,
-    Info,
-    Category,
-    Priority,
-    Where,
-    When,
-    Actions,
-    EditButton,
-    DeleteButton
-} from "./EventInfo.styled";
+import css from "./EventInfo.module.css";
 
 export const EventInfo = ({ event: { 
     id,
@@ -45,30 +32,30 @@ export const EventInfo = ({ event: {
     }, [priority])
 
     return (
-        <Card>
-            <ImageContainer>
-                <Image src={photo} alt="event illustration" />
-            </ImageContainer>
-            <Description>{description}</Description>
+        <div className={css.card}>
+            <div className={css.imageContainer}>
+                <img src={photo} alt="event illustration" className={css.image}/>
+            </div>
+            <p className={css.description}>{description}</p>
 
-            <Info>
-                <Category>{category}</Category>
-                <Priority style={{color: color}}>{priority}</Priority>
-                <Where>{place}</Where>
-                <When>
+            <div className={css.info}>
+                <span className={css.category}>{category}</span>
+                <span className={css.priority} style={{color: color}}>{priority}</span>
+                <span className={css.where}>{place}</span>
+                <span className={css.when}>
                     {date} at {time}
-                </When>
-            </Info>
+                </span>
+            </div>
 
-            <Actions>
+            <div className={css.actions}>
                 <Link 
                     to={`/edit/${id}`}
                     state={{ from: location.state?.from ?? `/event/${id}` }}
                 >
-                    <EditButton type="button">Edit</EditButton>
+                    <button className={css.editButton} type="button">Edit</button>
                 </Link>
-                <DeleteButton type="button">Delete event</DeleteButton>
-            </Actions>
-        </Card>
+                <button className={css.deleteButton} type="button">Delete event</button>
+            </div>
+        </div>
     )
 }

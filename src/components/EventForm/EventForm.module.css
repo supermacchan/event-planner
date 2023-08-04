@@ -1,6 +1,4 @@
-import styled from 'styled-components';
-
-export const Form = styled.form`
+.form {
     display: flex;
     flex-direction: column;
 
@@ -21,9 +19,9 @@ export const Form = styled.form`
         width: 1280px;
         padding: 40px 40px 54px 40px;
     }
-`
+}
 
-export const Container = styled.div`
+.container {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -38,9 +36,9 @@ export const Container = styled.div`
         max-height: 320px;
         column-gap: 42px;
     }
-`
+}
 
-export const Label = styled.label`
+.label {
     color: var(--purple);
     font-size: 16px;
     font-weight: 400;
@@ -48,9 +46,9 @@ export const Label = styled.label`
     letter-spacing: 0.4px;
 
     margin-bottom: 8px;
-`
+}
 
-export const Input = styled.input`
+.input {
     padding: 15px 12px;
 
     border-radius: 8px;
@@ -68,9 +66,10 @@ export const Input = styled.input`
     @media screen and (min-width: 1280px) {
         width: 372px;
     }
-`
+}
 
-export const TextArea = styled.textarea`
+.textarea {
+    resize: none;
     min-height: 156px;
     padding: 15px 12px;
 
@@ -89,23 +88,23 @@ export const TextArea = styled.textarea`
     @media screen and (min-width: 1280px) {
         width: 372px;
     }
-`
+}
 
-export const Enabled = styled.div`
+.enabled {
     display: flex;
     flex-direction: column;
-`
+}
 
-export const Disabled = styled.div`
+.disabled {
     display: flex;
     flex-direction: column;
 
-    & label {
+    & .label {
         color: var(--light-gray);
     } 
-`
+}
 
-export const Button = styled.button`
+.button {
     cursor: pointer;
 
     padding: 16px 12px;
@@ -130,4 +129,16 @@ export const Button = styled.button`
     @media screen and (min-width: 1280px) {
         margin-top: 60px;
     }
-`
+}
+
+.calendar {
+    position: absolute;
+    top: 88px;
+    right: 0;
+
+    border-radius: 11px;
+    background: var(--white);
+    box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.07);
+
+    /* padding: 20px; */
+}

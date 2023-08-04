@@ -1,29 +1,25 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { CiSearch } from "react-icons/ci";
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
-import css from "./Dropdown.module.css";
-import { 
-    HeaderContainer,
-    Content,
-    Title,
-    Search,
-    Label,
-    Input,
-} from "./Header.styled";
-// import { AiOutlineDown } from "react-icons/ai";
+import css from "./Header.module.css";
+import { MdClose } from "react-icons/md"
+import { AiOutlineDown } from "react-icons/ai";
 
 export const Header = () => {
+    const [keywords, setKeywords] = useState('');
+
     const options = [
         'UK', 'UA', 'EN'
     ];
     const defaultOption = options[0];
 
     return (
-        <HeaderContainer>
-            <Content>
+        <header className={css.header}>
+            <div className={css.container}>
                 <Link to={"/"}>
-                    <Title>Event Planner</Title>
+                    <h1 className={css.title}>Event Planner</h1>
                 </Link>
                 
                 <Dropdown 
@@ -34,19 +30,30 @@ export const Header = () => {
                     placeholderClassName={css.placeholder}
                     menuClassName={css.menu}
                     arrowClassName={css.arrow}
-                    // arrowOpen={<AiOutlineDown width={30} />}
+                    arrowOpen={<AiOutlineDown />}
                 />
-                <Search>
-                    <Label htmlFor="search">
+
+                <div className={css.search}>
+                    <label className={css.label} htmlFor="search">
                         <CiSearch style={{width: 24, height: 24}} />
-                    </Label>
-                    <Input 
+                    </label>
+                    <input 
+                        className={css.input}
                         type="text" 
                         name="search"
                         placeholder="Search by keywords"
+                        value={keywords}
+                        onChange={(e) => setKeywords(e.target.value)}
                     />
-                </Search>
-            </Content>
-        </HeaderContainer>
+                    <button 
+                        type="button" 
+                        className={css.clear} 
+                        onClick={() => setKeywords('')}
+                    >
+                        <MdClose style={{width: 18, height: 18}} />
+                    </button>
+                </div>
+            </div>
+        </header>
     )
 }

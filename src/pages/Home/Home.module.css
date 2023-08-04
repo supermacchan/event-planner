@@ -1,6 +1,4 @@
-import styled from 'styled-components';
-
-export const Menu = styled.div`
+.menu {
     @media screen and (min-width: 1280px) {
         display: flex;
         flex-direction: row-reverse;
@@ -9,11 +7,11 @@ export const Menu = styled.div`
 
         margin-bottom: 40px;
     }
-`
+}
 
-export const Buttons = styled.div`
+.buttons {
     display: flex;  
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     gap: 24px;
 
@@ -26,9 +24,9 @@ export const Buttons = styled.div`
     @media screen and (min-width: 1280px) {
         margin-bottom: 0;
     }
-`
+}
 
-export const AddButton = styled.button`
+.addButton {
     cursor: pointer;
 
     padding: 16px;
@@ -47,9 +45,16 @@ export const AddButton = styled.button`
     @media screen and (min-width: 768px) {
         padding: 16px 12px;
     }
-`
 
-export const ButtonText = styled.span`
+    transition: background-color 350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover,
+    &:focus {
+        background-color: var(--hover-purple);
+    }
+}
+
+.buttonText {
     display: none;
 
     @media screen and (min-width: 768px) {
@@ -58,9 +63,9 @@ export const ButtonText = styled.span`
         font-weight: 500;
         line-height: normal;
     }
-`
+}
 
-export const CardList = styled.ul`
+.cardList {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     grid-gap: 24px;
@@ -73,4 +78,4 @@ export const CardList = styled.ul`
     @media screen and (min-width: 1280px) {
         grid-template-columns: repeat(4, 1fr);
     }
-`
+}

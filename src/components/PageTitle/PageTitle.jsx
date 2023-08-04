@@ -1,9 +1,9 @@
-import { Title } from "./PageTitle.styled"
+import css from "./PageTitle.module.css"
 
 export const PageTitle = ({ title }) => {
     return (
-        <Title>
+        <h2 className={css.title}>
             {title}
-        </Title>
+        </h2>
     )
 }

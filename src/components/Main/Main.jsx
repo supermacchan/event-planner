@@ -1,9 +1,9 @@
-import { MainContainer } from "./Main.styled"
+import css from "./Main.module.css"
 
 export const Main = ({ children }) => {
     return (
-        <MainContainer>
+        <main className={css.main}>
             {children}
-        </MainContainer>
+        </main>
     )
 }

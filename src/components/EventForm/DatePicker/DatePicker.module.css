@@ -1,0 +1,38 @@
+
+.actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+
+    padding-bottom: 20px;
+    padding-right: 20px;
+    /* margin-top: 16px; */
+
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.33;
+    text-align: center;
+}
+
+.cancelBtn {
+    cursor: pointer;
+
+    padding: 8px 16px;
+
+    border-radius: 4px;
+    border: 1px solid var(--purple);
+    background-color: var(--white);
+    color: var(--purple);
+}
+
+.selectBtn {
+    cursor: pointer;
+
+    padding: 8px 16px;
+
+    border-radius: 4px;
+    border: 1px solid var(--purple);
+    background-color: var(--purple);
+    color: var(--white);
+}

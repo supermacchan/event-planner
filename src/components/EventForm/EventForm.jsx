@@ -1,18 +1,95 @@
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { 
-    Form,
-    Container,
-    Label,
-    Input,
-    TextArea,
-    Enabled,
-    Disabled,
-    Button
-} from "./EventForm.styled";
+import { DatePicker } from "./DatePicker/DatePicker";
+import { convertDateFormat } from "utils/convertDateFormat";
+import css from "./EventForm.module.css";
 
-export const EventForm = () => {
+// import defaultImage from "../../images/events/default2.png";
+
+export const EventForm = ({ event }) => {
     const location = useLocation();
     const navigate = useNavigate();
+
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [date, setDate] = useState('');
+    const [time, setTime] = useState('');
+    const [place, setPlace] = useState('');
+    const [category, setCategory]= useState('');
+    const [priority, setPriority] = useState('');
+    // const [image, setImage] = useState(defaultImage);
+
+    const [startDate, setStartDate] = useState(new Date());
+
+    const [showDatePicker, setShowDatePicker] = useState(false);
+
+    // filling out the form fields when opening the Edit page
+    useEffect(() => {
+        if (!event) {
+            return;
+        }
+
+        const { 
+            name, 
+            description, 
+            category, 
+            priority, 
+            place, 
+            date, 
+            time, 
+            // photo 
+        } = event;
+        setTitle(name);
+        setDescription(description);
+        setDate(date);
+        setTime(time);
+        setPlace(place);
+        setCategory(category);
+        setPriority(priority);
+
+    }, [event]);
+
+    const handleInputChange = (e) => {
+        switch (e.target.name) {
+            case "title": 
+                setTitle(e.target.value);
+                break;
+            case "description": 
+                setDescription(e.target.value);
+                break;
+            case "date": 
+                setDate(e.target.value);
+                break;
+            case "time": 
+                setTime(e.target.value);
+                break;
+            case "location": 
+                setPlace(e.target.value);
+                break;
+            case "category": 
+                setCategory(e.target.value);
+                break;
+            case "priority": 
+                setPriority(e.target.value);
+                break;
+            default: 
+                return;
+        }
+    }
+
+    const handleDateChange = (date) => {
+        setStartDate(date);
+    }
+
+    const handleSaveDate = () => {
+        const selectedDate = convertDateFormat(startDate);
+        setDate(selectedDate);
+        setShowDatePicker(false);
+    }
+
+    const handleCloseCalendar = () => {
+        setShowDatePicker(false);
+    }
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -29,106 +106,144 @@ export const EventForm = () => {
     }
 
     return (
-        <Form onSubmit={handleFormSubmit}>
-            <Container>
-                {/* title */}
-                <Enabled>
-                    <Label 
+        <form className={css.form} onSubmit={handleFormSubmit}>
+            <div className={css.container}>
+
+                <div className={css.enabled}>
+                    <label 
+                        className={css.label} 
                         htmlFor="title"
                     >
                         Title
-                    </Label>
-                    <Input 
+                    </label>
+                    <input 
+                        className={css.input}
                         type="text"
                         id="title" 
                         name="title" 
                         required
+                        value={title}
+                        onChange={handleInputChange}
                     />
-                </Enabled>
+                </div>
                 
-                {/* description */}
-                <Enabled>
-                    <Label 
+                <div className={css.enabled}>
+                    <label 
+                        className={css.label}  
                         htmlFor="description"
                     >
                         Description
-                    </Label>
-                    <TextArea 
+                    </label>
+                    <textarea
+                        className={css.textarea} 
                         type="text"
                         id="description" 
                         name="description" 
                         required
-                    ></TextArea>
-                </Enabled>
+                        value={description}
+                        onChange={handleInputChange}
+                    ></textarea>
+                </div>
                 
-                {/* date */}
-                <Enabled>
-                    <Label 
+                <div className={css.enabled} 
+                    style={{position: "relative"}}
+                >
+                    <label 
+                        className={css.label} 
                         htmlFor="date"
                     >
                         Select date
-                    </Label>
-                    <Input 
-                        type="date"
+                    </label>
+                    <input 
+                        className={css.input} 
+                        type="text"
                         id="date" 
                         name="date" 
+                        pattern="/^\d{2}\.\d{2}\.\d{4}$/"
                         required
+                        value={date}
+                        onChange={handleInputChange}
+                        onClick={() => setShowDatePicker(true)}
                     />
-                </Enabled>
+                    
+                    {showDatePicker && 
+                        <div className={css.calendar}>
+                            <DatePicker 
+                                startDate={startDate}
+                                onSelect={handleDateChange}
+                                onClose={handleCloseCalendar}
+                                onSave={handleSaveDate}
+                            />
+                        </div>
+                    }
+                </div>
 
-                {/* time */}
-                <Enabled>
-                    <Label 
+                <div className={css.enabled}>
+                    <label 
+                        className={css.label}  
                         htmlFor="time"
                     >
                         Select time
-                    </Label>
-                    <Input 
+                    </label>
+                    <input 
+                        className={css.input} 
                         type="time"
                         id="time" 
                         name="time" 
                         required
+                        value={time}
+                        onChange={handleInputChange}
                     />
-                </Enabled>
+                </div>
 
-                {/* location */}
-                <Enabled>
-                    <Label 
+                <div className={css.enabled}>
+                    <label 
+                        className={css.label}  
                         htmlFor="location"
                     >
                         Location
-                    </Label>
-                    <Input 
+                    </label>
+                    <input 
+                        className={css.input} 
                         type="text"
                         id="location" 
                         name="location" 
+                        pattern="/^[A-Za-z\s]+$/"
                         required
+                        value={place}
+                        onChange={handleInputChange}
                     />
-                </Enabled>
+                </div>
                 
                 {/* category - dropdown */}
-                <Disabled>
-                    <Label 
+                <div className={css.disabled}>
+                    <label 
+                        className={css.label} 
                         htmlFor="category"
                     >
                         Category
-                    </Label>
-                    <Input 
+                    </label>
+                    <input 
+                        className={css.input} 
                         type="text"
                         id="category" 
                         name="category" 
                         disabled
+                        value={category}
+                        onChange={handleInputChange}
                     />
-                </Disabled>
+                </div>
 
                 {/* image */}
-                <Disabled>
-                    <Label 
+                <div className={css.disabled}>
+                    <label 
+                        className={css.label} 
                         htmlFor="image"
                     >
                         Add picture
-                    </Label>
-                    <Input 
+                    </label>
+                    <input 
+                        className={css.input} 
                         type="file"
                         id="image" 
                         name="image" 
@@ -136,32 +251,36 @@ export const EventForm = () => {
                     />
                     {/* div to overlap over the file input */}
                     <div></div>
-                </Disabled>
+                </div>
 
                 {/* priority - dropdown*/}
-                <Disabled>
-                    <Label 
+                <div className={css.disabled}>
+                    <label 
+                        className={css.label} 
                         htmlFor="priority"
                     >
                         Priority
-                    </Label>
-                    <Input 
+                    </label>
+                    <input 
+                        className={css.input} 
                         type="text"
                         id="priority" 
                         name="priority" 
                         disabled
+                        value={priority}
+                        onChange={handleInputChange}
                     />
-                </Disabled>
-            </Container>
+                </div>
+            </div>
         
             {/* adjust text depending on the location */}
-            <Button type="submit">
+            <button type="submit" className={css.button}>
                 {
                     location.pathname === '/create'
                     ? "Add event"
                     : "Save"
                 }
-            </Button>
-        </Form>
+            </button>
+        </form>
     )
 }
