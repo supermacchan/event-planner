@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation  } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { Link, useLocation, useNavigate  } from 'react-router-dom';
+import { operations } from "redux/operations";
 import { adjustDate } from "utils/convertDateFormat";
+import { toast } from "react-toastify";
 import css from "./EventInfo.module.css";
 
 export const EventInfo = ({ event: { 
@@ -15,6 +18,8 @@ export const EventInfo = ({ event: {
 } }) => {
     const [color, setColor] = useState(null);
     const location = useLocation();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         switch (priority) {
@@ -33,6 +38,12 @@ export const EventInfo = ({ event: {
     }, [priority])
 
     const formattedDate = adjustDate(date);
+
+    const handleDelete = () => {
+        dispatch(operations.deleteEvent(id));
+        toast.success("The event has been deleted!")
+        navigate('/');
+    }
 
     return (
         <div className={css.card}>
@@ -61,7 +72,13 @@ export const EventInfo = ({ event: {
                 >
                     <button className={css.editButton} type="button">Edit</button>
                 </Link>
-                <button className={css.deleteButton} type="button">Delete event</button>
+                <button 
+                    className={css.deleteButton} 
+                    type="button"
+                    onClick={handleDelete}
+                >
+                    Delete event
+                </button>
             </div>
         </div>
     )

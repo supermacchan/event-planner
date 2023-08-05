@@ -41,8 +41,34 @@ const createEvent = createAsyncThunk(
   }
 );
 
+const deleteEvent = createAsyncThunk(
+  'events/deleteEvent',
+  async (id, thunkAPI) => {
+    try {
+      const { data } = await instance.delete(`/events/${id}`); 
+      return data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.message);
+    }
+  }
+);
+
+const updateEvent = createAsyncThunk(
+  'events/updateEvent',
+  async ({id, newEvent}, thunkAPI) => {
+    try {
+      const { data } = await instance.put(`/events/${id}`, newEvent); 
+      return data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.message);
+    }
+  }
+);
+
 export const operations = {
     fetchAllEvents,
     fetchEventDetails,
-    createEvent
+    createEvent,
+    deleteEvent,
+    updateEvent
 } 

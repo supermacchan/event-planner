@@ -52,28 +52,28 @@ export const eventSlice = createSlice({
       state.isLoading = false;
     },
 
-//     [operations.updateHero.fulfilled](state, action) {
-//       const index = state.heroes.indexOf(action.payload.data);
-//       if (index > 0) {
-//         state.heroes.splice(index, 1, action.payload.data);
-//       }
-//       state.error = null;
-//     },
-//     [operations.updateHero.rejected](state, action) {
-//       state.error = action.payload;
-//     },
+    [operations.deleteEvent.fulfilled](state, action) {
+      state.isLoading = false;
+      state.error = null;
+    },
+    [operations.deleteEvent.pending](state, action) {
+      state.isLoading = true;
+    },
+    [operations.deleteEvent.rejected](state, action) {
+      state.error = action.payload;
+      state.isLoading = false;
+    },
 
-//     [operations.deleteHero.fulfilled](state, action) {
-//       state.isLoading = false;
-//       state.error = null;
-//     },
-//     [operations.deleteHero.pending](state, action) {
-//       state.isLoading = true;
-//     },
-//     [operations.deleteHero.rejected](state, action) {
-//       state.error = action.payload;
-//       state.isLoading = false;
-//     },
+    [operations.updateEvent.fulfilled](state, action) {
+      const index = state.events.indexOf(action.payload.data);
+      if (index > 0) {
+        state.events.splice(index, 1, action.payload.data);
+      }
+      state.error = null;
+    },
+    [operations.updateEvent.rejected](state, action) {
+      state.error = action.payload;
+    },
   },
 });
 

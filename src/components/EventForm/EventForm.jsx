@@ -24,7 +24,7 @@ export const EventForm = ({ event }) => {
     const [place, setPlace] = useState('');
     const [category, setCategory]= useState('');
     const [priority, setPriority] = useState('');
-    // const [image, setImage] = useState(defaultImage);
+    const [image, setImage] = useState(null);
 
     const [startDate, setStartDate] = useState(new Date());
 
@@ -44,7 +44,7 @@ export const EventForm = ({ event }) => {
             place, 
             date, 
             time, 
-            // photo 
+            photo 
         } = event;
         setTitle(name);
         setDescription(description);
@@ -53,6 +53,7 @@ export const EventForm = ({ event }) => {
         setPlace(place);
         setCategory(category);
         setPriority(priority);
+        setImage(photo);
 
     }, [event]);
 
@@ -113,7 +114,7 @@ export const EventForm = ({ event }) => {
 
     const collectData = () => {
         const newEvent = {
-            id: nanoid(),
+            id: event.id ?? nanoid(),
             name: title,
             description,
             category,
@@ -121,7 +122,7 @@ export const EventForm = ({ event }) => {
             place,
             date,
             time,
-            photo: defaultImage
+            photo: image ?? defaultImage
         }
 
         return newEvent;
@@ -152,6 +153,7 @@ export const EventForm = ({ event }) => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
+        console.log(location.pathname)
 
         const validate = formValidation();
 
@@ -169,8 +171,11 @@ export const EventForm = ({ event }) => {
             navigate('/');
         }
 
-        if (location.pathname === '/edit') {
-            navigate('/event');
+        if (location.pathname === `/edit/${event.id}`) {
+            const id = event.id;
+            dispatch(operations.updateEvent({id, newEvent}));
+            toast.success("The event info has been updated!");
+            navigate(`/event/${event.id}`);
         }
     }
 
