@@ -1,34 +1,42 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { operations } from "redux/operations";
+import { selectCurrent, selectIsLoading, selectError } from "redux/selectors";
+import { toast } from 'react-toastify';
+
+import { Loader } from "components/Loader/Loader";
 import { Main } from "components/Main/Main";
 import { BackButton } from "components/BackButton/BackButton";
 import { PageTitle } from "components/PageTitle/PageTitle";
 import { EventInfo } from 'components/EventInfo/EventInfo';
 import css from "./Event.module.css";
-import { events } from "data/data";
-// import { toast } from 'react-toastify';
 
 const Event = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [event, setEvent] = useState(null);
-    // const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
 
-    // will fetch data via id
-    // temporary for development:
+    const event = useSelector(selectCurrent);
+    const isLoading = useSelector(selectIsLoading);
+    const error = useSelector(selectError);
+
+    // fetch data
     useEffect(() => {
-        const currentEvent = events.find(e => Number(e.id) === Number(id));
+        dispatch(operations.fetchEventDetails(id));
 
-        if (!currentEvent) {
+        if (error) {
+            toast.error("Oops! Something went wrong...");
             navigate('/not-found');
         }
 
-        setEvent(currentEvent);
-    }, [id, navigate])
+    }, [dispatch, navigate, id, error])
 
     return (
         <Main>
             <BackButton />
+
+            {isLoading && <Loader />}
 
             {event && 
                 <div className={css.event}>

@@ -1,33 +1,44 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { operations } from "redux/operations";
+import { selectCurrent, selectIsLoading, selectError } from "redux/selectors";
+import { toast } from 'react-toastify';
+
+import { Loader } from "components/Loader/Loader";
 import { Main } from "components/Main/Main";
 import { PageTitle } from "components/PageTitle/PageTitle";
 import { BackButton } from "components/BackButton/BackButton";
 import { EventForm } from "components/EventForm/EventForm";
-import { events } from "data/data";
 
 const Edit = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [event, setEvent] = useState(null);
+    const dispatch = useDispatch();
 
-    // will fetch data via id
-    // temporary for development:
+    const event = useSelector(selectCurrent);
+    const isLoading = useSelector(selectIsLoading);
+    const error = useSelector(selectError);
+
+    // fetch data
     useEffect(() => {
-        const currentEvent = events.find(e => Number(e.id) === Number(id));
+        dispatch(operations.fetchEventDetails(id));
 
-        if (!currentEvent) {
+        if (error) {
+            toast.error("Oops! Something went wrong...");
             navigate('/not-found');
         }
 
-        setEvent(currentEvent);
-    }, [id, navigate])
+    }, [dispatch, navigate, id, error])
 
     return (
         <Main>
             <BackButton />
             <PageTitle title="Edit event" />
-            <EventForm event={event} />  
+
+            {isLoading && <Loader />}
+            
+            {event && <EventForm event={event} />}
         </Main>
     )
 }

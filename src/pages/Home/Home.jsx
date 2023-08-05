@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { operations } from "redux/operations";
+import { selectEvents, selectIsLoading } from "redux/selectors";
+
+import { Loader } from "components/Loader/Loader";
 import { Main } from "components/Main/Main";
 import { PageTitle } from "components/PageTitle/PageTitle";
 import { Filters } from "components/Filters/Filters";
@@ -7,12 +12,18 @@ import { EventCard } from "components/EventCard/EventCard";
 import { Pagination } from "components/Pagination/Pagination";
 import { AiOutlinePlus } from "react-icons/ai";
 import css from "./Home.module.css";
-import { events } from "data/data";
 
 const Home = () => {
+    // const [events, setEvents] = useState([]);
     const [windowWidth, setWindowWidth] = useState(null);
     const [isMobile, setIsMobile] = useState(true);
+    const [eventsPerPage, setEventsPerPage] = useState(6);
+
+    const events = useSelector(selectEvents);
+    const isLoading = useSelector(selectIsLoading);
+
     const location = useLocation();
+    const dispatch = useDispatch();
 
     // tracking window size (for changing screen orientation on mobile devices)
     useEffect(() => {
@@ -34,7 +45,28 @@ const Home = () => {
         if (windowWidth < 768) {
         setIsMobile(true);
         }
+
+        if (windowWidth >= 1280) {
+            setEventsPerPage(8);
+        } else {
+            setEventsPerPage(6);
+        }
     }, [windowWidth]);
+
+    // fetch data
+    useEffect(() => {
+        dispatch(operations.fetchAllEvents())
+        // console.log(events)
+        // const firstRender = async () => {
+        //     const { payload } = await dispatch(operations.fetchAllEvents());
+        //     console.log(payload);
+        //     console.log(events);
+
+        //     // setEvents(payload);
+        // }
+        
+        // firstRender();
+    }, [dispatch])
 
     const handleResize = () => {
         setWindowWidth(window.innerWidth);
@@ -66,12 +98,17 @@ const Home = () => {
                     />
                 }
             </div>
+
+            {isLoading && <Loader />}
             
             <ul className={css.cardList}> 
-                {events.map(event => <li key={event.id}><EventCard event={event}/></li>)}
+                {events.length > 0 && events.map(event => <li key={event.id}><EventCard event={event}/></li>)}
             </ul>
 
-            <Pagination isMobile={isMobile}/>
+            {events.length > eventsPerPage &&
+                <Pagination isMobile={isMobile}/>
+            }
+            
         </Main>
     )
 }

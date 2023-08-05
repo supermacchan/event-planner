@@ -1,11 +1,11 @@
-import image1 from "../images/events/image1.jpg";
-import image2 from "../images/events/image2.jpg";
-import image3 from "../images/events/image3.jpg";
-import image4 from "../images/events/image4.jpg";
-import image5 from "../images/events/image5.jpg";
-import image6 from "../images/events/image6.jpg";
-import image7 from "../images/events/image7.jpg";
-import image8 from "../images/events/image8.jpg";
+// import image1 from "../images/events/image1.jpg";
+// import image2 from "../images/events/image2.jpg";
+// import image3 from "../images/events/image3.jpg";
+// import image4 from "../images/events/image4.jpg";
+// import image5 from "../images/events/image5.jpg";
+// import image6 from "../images/events/image6.jpg";
+// import image7 from "../images/events/image7.jpg";
+// import image8 from "../images/events/image8.jpg";
 
 export const events = [
     {
@@ -17,7 +17,7 @@ export const events = [
         place: "Kyiv",
         date: "12.07",
         time: "12:00 am",
-        photo: image1
+        photo: "https://i.ibb.co/fpntFsK/image1.jpg"
     },
     {
         id: 2,
@@ -28,7 +28,7 @@ export const events = [
         place: "Kyiv",
         date: "12.07",
         time: "12:00 am",
-        photo: image2
+        photo: "https://i.ibb.co/QpVLPQz/image2.jpg"
     },
     {
         id: 3,
@@ -39,7 +39,7 @@ export const events = [
         place: "Kyiv",
         date: "12.07",
         time: "12:00 am",
-        photo: image3
+        photo: "https://i.ibb.co/cvk92Nj/image3.jpg"
     },
     {
         id: 4,
@@ -50,7 +50,7 @@ export const events = [
         place: "Kyiv",
         date: "12.07",
         time: "12:00 am",
-        photo: image4
+        photo: "https://i.ibb.co/jGGYNTn/image4.jpg"
     },
     {
         id: 5,
@@ -61,7 +61,7 @@ export const events = [
         place: "Kyiv",
         date: "12.07",
         time: "12:00 am",
-        photo: image5
+        photo: "https://i.ibb.co/HrTYbyK/image5.jpg"
     },
     {
         id: 6,
@@ -72,7 +72,7 @@ export const events = [
         place: "Kyiv",
         date: "12.07",
         time: "12:00 am",
-        photo: image6
+        photo: "https://i.ibb.co/kD3Rdd8/image6.jpg"
     },
     {
         id: 7,
@@ -83,7 +83,7 @@ export const events = [
         place: "Kyiv",
         date: "12.07",
         time: "12:00 am",
-        photo: image7
+        photo: "https://i.ibb.co/W6bWnfF/image7.jpg"
     },
     {
         id: 8,
@@ -94,6 +94,6 @@ export const events = [
         place: "Kyiv",
         date: "12.07",
         time: "12:00 am",
-        photo: image8
+        photo: "https://i.ibb.co/p0R963Z/image8.jpg"
     }
 ]

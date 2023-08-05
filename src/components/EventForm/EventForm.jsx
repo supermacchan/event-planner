@@ -1,16 +1,21 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { operations } from "redux/operations";
+
 import { DatePicker } from "./DatePicker/DatePicker";
 import { convertDateFormat } from "utils/convertDateFormat";
-import { MdClose, MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { nanoid } from "nanoid";
 import { toast } from "react-toastify";
+
+import { MdClose, MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import css from "./EventForm.module.css";
 import defaultImage from "../../images/events/default2.png";
 
 export const EventForm = ({ event }) => {
     const location = useLocation();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -124,7 +129,7 @@ export const EventForm = ({ event }) => {
 
     const formValidation = () => {
         const form =  document.getElementById("form");
-        const inputs = form.querySelectorAll("input");
+        const inputs = form.querySelectorAll("input:not(:disabled)");
         
         const validate = Array.from(inputs).every(i => i.value.trim());
         console.log(validate);
@@ -158,9 +163,9 @@ export const EventForm = ({ event }) => {
         const newEvent = collectData();
         console.log(newEvent);
 
-        toast.success("A new event has been created!");
-
         if (location.pathname === '/create') {
+            dispatch(operations.createEvent(newEvent));
+            toast.success("A new event has been created!");
             navigate('/');
         }
 

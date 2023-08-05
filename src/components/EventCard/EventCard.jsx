@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
+import { adjustDate } from "utils/convertDateFormat";
 import css from "./EventCard.module.css";
 
 export const EventCard = ({ event: { 
@@ -31,12 +32,18 @@ export const EventCard = ({ event: {
         }
     }, [priority])
 
+    const formattedDate = adjustDate(date);
+
     return (
         <div className={css.card}>
             
             <div className={css.filters}>
-                <span className={css.category}>{category}</span>
-                <span className={css.priority} style={{color: color}}>{priority}</span>
+                { category !== "" &&
+                    <span className={css.category}>{category}</span>
+                }
+                { priority !== "" &&
+                    <span className={css.priority} style={{color: color}}>{priority}</span>
+                }
             </div>
             
             <div className={css.imageContainer}>
@@ -44,7 +51,7 @@ export const EventCard = ({ event: {
 
                 <div className={css.info}>
                     <span>
-                        {date} at {time}
+                        {formattedDate} at {time}
                     </span>
                     <span>{place}</span>
                 </div>
