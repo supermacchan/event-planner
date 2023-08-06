@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkevent_planner=self.webpackChunkevent_planner||[]).push([[23],{7076:function(e,n,t){t.r(n);var s=t(1979),r=t(8453),u=t(5450),a=t(3443),l=t(184);n.default=function(){return(0,l.jsxs)(s.o,{children:[(0,l.jsx)(u.x,{}),(0,l.jsx)(r.V,{title:"Create new event"}),(0,l.jsx)(a.$,{})]})}}}]);
+//# sourceMappingURL=23.89140aec.chunk.js.map
