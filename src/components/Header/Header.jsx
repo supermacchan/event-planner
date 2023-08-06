@@ -24,14 +24,13 @@ export const Header = () => {
                     <h1 className={css.title}>Event Planner</h1>
                 </Link>
                 
-                <div className={css.dropdown}>
+                <div className={css.dropdown} onClick={() => setShowOptions(prevState => !prevState)}>
                     <span className={css.language}>
                         {lang}
                     </span>
                     <button 
                         type="button"
                         className={css.arrow}
-                        onClick={() => setShowOptions(prevState => !prevState)}
                     >
                         <MdKeyboardArrowDown style={{width: 18, height: 18}} />
                     </button>

@@ -6,8 +6,9 @@ export const TimePickerInput = ({
     time, 
     handleInputChange,
     showTimePicker,
-    toggleMenu
-}) => {    
+    toggleMenu,
+    saveTime
+}) => {   
     return (
         <div className={css.enabled}>
             <label 
@@ -40,7 +41,10 @@ export const TimePickerInput = ({
             </button>
 
             {showTimePicker && 
-                <TimePicker onClick={() => toggleMenu("time")} />
+                <TimePicker 
+                    initialTime={time}
+                    saveTime={saveTime}
+                />
             }
         </div>
     )

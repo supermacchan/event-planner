@@ -75,14 +75,6 @@ export const EventForm = ({ event }) => {
             case "description": 
                 setDescription(e.target.value);
                 break;
-            // TEMP
-            case "date": 
-                setDate('');
-                break;
-            case "time": 
-                setTime('');
-                break;
-            // TEMP
             case "location": 
                 setPlace(e.target.value);
                 break;
@@ -159,6 +151,13 @@ export const EventForm = ({ event }) => {
         setShowDatePicker(false);
     }
 
+    const handleSaveTime = (hour, minute, ampm) => {
+        const newTime = `${hour}:${minute} ${ampm.toLowerCase()}`;
+        setTime(newTime);
+        console.log('Shalala!');
+        console.log(newTime)
+    }
+
     const collectData = () => {
         let id = null;
         if (event) {
@@ -170,7 +169,7 @@ export const EventForm = ({ event }) => {
             name: title,
             description,
             category,
-            priority,
+            priority: priority.toLowerCase(),
             place,
             date,
             time,
@@ -232,7 +231,11 @@ export const EventForm = ({ event }) => {
     }
 
     return (
-        <form className={css.form} id="form" onSubmit={handleFormSubmit}>
+        <form 
+            className={css.form} 
+            id="form" 
+            onSubmit={handleFormSubmit}
+        >
             <div className={css.container}>
 
                 <TitleInput 
@@ -260,6 +263,7 @@ export const EventForm = ({ event }) => {
                     handleInputChange={handleInputChange}
                     showTimePicker={showTimePicker}
                     toggleMenu={toggleMenu}
+                    saveTime={handleSaveTime}
                 />
 
                 <LocationInput 
@@ -287,7 +291,7 @@ export const EventForm = ({ event }) => {
                 />
             </div>
         
-            {/* adjust text depending on the location */}
+            {/* adjusts text depending on the location */}
             <button type="submit" className={css.button}>
                 {
                     location.pathname === '/create'
