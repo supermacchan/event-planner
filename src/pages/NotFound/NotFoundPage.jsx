@@ -11,7 +11,7 @@ export const NotFoundPage = ({
     useEffect(() => {
         setTimeout(() => {
             setRedirect(true)
-        }, 3500)
+        }, 4000)
         
     }, [])
     

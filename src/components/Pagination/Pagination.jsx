@@ -11,9 +11,9 @@ export const Pagination = ({ isMobile }) => {
 
         pages.forEach(p => {
             if (Number(p.innerHTML) === currentPage) {
-                p.style.color = "#7B61FF";
+                p.classList.add(css.currentPage);
             } else {
-                p.style.color = "#ACA7C3";
+                p.classList.remove(css.currentPage);
             }
         })
     }, [currentPage])

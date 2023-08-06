@@ -39,8 +39,8 @@ export const EventInfo = ({ event: {
 
     const formattedDate = adjustDate(date);
 
-    const handleDelete = () => {
-        dispatch(operations.deleteEvent(id));
+    const handleDelete = async () => {
+        await dispatch(operations.deleteEvent(id));
         toast.success("The event has been deleted!")
         navigate('/');
     }

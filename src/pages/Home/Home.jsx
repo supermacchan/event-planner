@@ -56,16 +56,6 @@ const Home = () => {
     // fetch data
     useEffect(() => {
         dispatch(operations.fetchAllEvents())
-        // console.log(events)
-        // const firstRender = async () => {
-        //     const { payload } = await dispatch(operations.fetchAllEvents());
-        //     console.log(payload);
-        //     console.log(events);
-
-        //     // setEvents(payload);
-        // }
-        
-        // firstRender();
     }, [dispatch])
 
     const handleResize = () => {
@@ -74,9 +64,9 @@ const Home = () => {
 
     return (
         <Main>
-            <div className={css.menu}>
-                <div className={css.buttons}>
-                    <Filters isMobile={isMobile}/>
+            <div className={css.topBar}>
+                <div className={css.menu}>
+                    <Filters isMobile={isMobile} />
                     <Link 
                         to={"/create"} 
                         state={{ from: location.state?.from ?? "/" }}
@@ -85,9 +75,7 @@ const Home = () => {
                             <AiOutlinePlus 
                                 style={{width: 24, height: 24}} 
                             /> 
-                            {!isMobile && 
-                                <span className={css.buttonText}>Add new event</span>
-                            }
+                            <span className={css.buttonText}>Add new event</span>
                         </button>
                     </Link>
                 </div>
@@ -105,7 +93,7 @@ const Home = () => {
                 {events.length > 0 && events.map(event => <li key={event.id}><EventCard event={event}/></li>)}
             </ul>
 
-            {events.length > eventsPerPage &&
+            {events.length >= eventsPerPage &&
                 <Pagination isMobile={isMobile}/>
             }
             

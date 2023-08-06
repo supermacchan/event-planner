@@ -1,0 +1,141 @@
+.container {
+    position: absolute;
+    bottom: -168px;
+    left: 0;
+    z-index: 150;
+
+    overflow: hidden;
+
+    display: flex;
+    gap: 48px;
+
+    width: 240px;
+    height: 160px;
+    padding: 0 16px;
+
+    border-radius: 8px;
+    box-shadow: 2px 4px 9px 0px rgba(166, 141, 174, 0.28);
+    background-color: var(--white);
+
+    @media screen and (min-width: 768px) {
+        width: 308px;
+    }
+
+    @media screen and (min-width: 1280px) {
+        width: 372px;
+    }
+
+    &::before {
+        content: '';
+
+        position: absolute;
+        top: 56px;
+        z-index: 40;
+
+        height: 1px;
+        width: calc(100% - 32px);
+        background-color: var(--light-gray);
+    }
+
+    &::after {
+        content: '';
+
+        position: absolute;
+        bottom: 56px;
+        z-index: 40;
+
+        height: 1px;
+        width: calc(100% - 32px);
+        background-color: var(--light-gray);
+    }
+}
+
+.timeOptions {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+
+    width: 48px;
+    padding: 56px 0;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    -ms-overflow-style: none;  
+    scrollbar-width: none;
+}
+
+.timeButton {
+    cursor: pointer;
+
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 8px;
+
+    border: none;
+    background-color: transparent;
+    color: var(--light-gray);
+    
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: normal;
+
+    &:last-of-type {
+        margin-bottom: 0;
+    }
+}
+
+.divider {
+    position: absolute;
+    top: 50%;
+    left: 80px;
+    transform: translateY(-50%);
+
+    width: 12px;
+
+    text-align: center;
+    color: var(--hover-black);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.ampm {
+    width: 73px;
+    margin-left: -48px;
+    padding: 56px 0;
+
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    -ms-overflow-style: none;  
+    scrollbar-width: none;
+}
+
+.ampmButton {
+    cursor: pointer;
+
+    width: 100%;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+
+    border: none;
+    background-color: transparent;
+    color: var(--light-gray);
+    
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: normal;
+
+    &:last-of-type {
+        margin-bottom: 0;
+    }
+}
+
+.selected {
+    color: var(--hover-black);
+}

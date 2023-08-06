@@ -8,13 +8,13 @@ export const convertDateFormat = (inputDate) => {
   const year = parsedDate.getFullYear();
 
   // Format the date as dd.mm.yyyy
-  const formattedDate = `${day}.${month}.${year}`;
+  const formattedDate = `${day}/${month}/${year}`;
 
   return formattedDate;
 }
 
 export const adjustDate = (date) => {
-  const dateParts = date.split('.');
+  const dateParts = date.split('/');
   
   const day = dateParts[0];
   const month = dateParts[1];

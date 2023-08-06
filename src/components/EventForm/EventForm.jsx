@@ -3,14 +3,21 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { operations } from "redux/operations";
 
-import { DatePicker } from "./DatePicker/DatePicker";
+import { TitleInput } from "./Title/TitleInput";
+import { DescriptionInput } from "./Description/DescriptionInput";
+import { DatePickerInput } from "./DatePicker/DatePickerInput";
+import { TimePickerInput } from "./TimePicker/TimePickerInput";
+import { LocationInput } from "./Location/LocationInput";
+import { CategoryInput } from "./CategorySelect/CategoryInput";
+import { PriorityInput } from "./PrioritySelect/PriorityInput";
+import { ImageInput } from "./ImageSelect/ImageInput";
+
 import { convertDateFormat } from "utils/convertDateFormat";
+import { controlInput } from "utils/form";
 import { nanoid } from "nanoid";
 import { toast } from "react-toastify";
 
-import { MdClose, MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import css from "./EventForm.module.css";
-import defaultImage from "../../images/events/default2.png";
 
 export const EventForm = ({ event }) => {
     const location = useLocation();
@@ -26,9 +33,12 @@ export const EventForm = ({ event }) => {
     const [priority, setPriority] = useState('');
     const [image, setImage] = useState(null);
 
-    const [startDate, setStartDate] = useState(new Date());
-
     const [showDatePicker, setShowDatePicker] = useState(false);
+    const [showTimePicker, setShowTimePicker] = useState(false);
+    const [showCategories, setShowCategories] = useState(false);
+    const [showPriorities, setShowPriorities] = useState(false);
+
+    const defaultImage = "https://i.ibb.co/FhD3YJX/default2.png";
 
     // filling out the form fields when opening the Edit page
     useEffect(() => {
@@ -65,12 +75,14 @@ export const EventForm = ({ event }) => {
             case "description": 
                 setDescription(e.target.value);
                 break;
+            // TEMP
             case "date": 
-                setDate(e.target.value);
+                setDate('');
                 break;
             case "time": 
-                setTime(e.target.value);
+                setTime('');
                 break;
+            // TEMP
             case "location": 
                 setPlace(e.target.value);
                 break;
@@ -85,36 +97,76 @@ export const EventForm = ({ event }) => {
         }
     }
 
-    const toggleDataPicker = () => {
+    const toggleMenu = (id) => {
         const form =  document.getElementById("form");
-        const dateInput = form.querySelector("#date");
+        const input = form.querySelector(`#${id}`);
+        let condition = false;
 
-        if (showDatePicker) {
-            dateInput.blur();
-        } else {
-            dateInput.focus();
+        switch (id) {
+            case "date":
+                condition = showDatePicker;
+                setShowDatePicker(prevState => !prevState);
+                setShowTimePicker(false);
+                setShowCategories(false);
+                setShowPriorities(false);
+                break;
+            case "time": 
+                condition = showTimePicker;
+                setShowTimePicker(prevState => !prevState);
+                setShowDatePicker(false);
+                setShowCategories(false);
+                setShowPriorities(false);
+                break;
+            case "category":
+                condition = showCategories;
+                setShowCategories(prevState => !prevState);
+                setShowDatePicker(false);
+                setShowTimePicker(false);
+                setShowPriorities(false);
+                break;
+            case "priority":
+                condition = showPriorities;
+                setShowPriorities(prevState => !prevState);
+                setShowDatePicker(false);
+                setShowTimePicker(false);
+                setShowCategories(false);
+                break;
+            default:
+                return;
         }
 
-        setShowDatePicker(prevState => !prevState)
+        controlInput(input, condition);
     }
 
-    const handleDateChange = (date) => {
-        setStartDate(date);
+    const handleSelectOption = (id, e) => {
+        switch (id) {
+            case "category":
+                setCategory(e.target.innerText);
+                setShowCategories(false);
+                break;
+            case "priority":
+                setPriority(e.target.innerText);
+                setShowPriorities(false);
+                break;
+            default:
+                return;
+        }
     }
 
-    const handleSaveDate = () => {
+    const handleSaveDate = (startDate) => {
         const selectedDate = convertDateFormat(startDate);
         setDate(selectedDate);
         setShowDatePicker(false);
     }
 
-    const handleCloseCalendar = () => {
-        setShowDatePicker(false);
-    }
-
     const collectData = () => {
+        let id = null;
+        if (event) {
+            id = event.id
+        }
+
         const newEvent = {
-            id: event.id ?? nanoid(),
+            id: id ?? nanoid(),
             name: title,
             description,
             category,
@@ -151,9 +203,8 @@ export const EventForm = ({ event }) => {
         return true;
     }
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
-        console.log(location.pathname)
 
         const validate = formValidation();
 
@@ -166,14 +217,15 @@ export const EventForm = ({ event }) => {
         console.log(newEvent);
 
         if (location.pathname === '/create') {
-            dispatch(operations.createEvent(newEvent));
+            await dispatch(operations.createEvent(newEvent));
             toast.success("A new event has been created!");
             navigate('/');
+            return;
         }
 
         if (location.pathname === `/edit/${event.id}`) {
             const id = event.id;
-            dispatch(operations.updateEvent({id, newEvent}));
+            await dispatch(operations.updateEvent({id, newEvent}));
             toast.success("The event info has been updated!");
             navigate(`/event/${event.id}`);
         }
@@ -183,230 +235,56 @@ export const EventForm = ({ event }) => {
         <form className={css.form} id="form" onSubmit={handleFormSubmit}>
             <div className={css.container}>
 
-                <div className={css.enabled}>
-                    <label 
-                        className={css.label} 
-                        htmlFor="title"
-                    >
-                        Title
-                    </label>
-                    <input 
-                        className={css.input}
-                        type="text"
-                        id="title" 
-                        name="title" 
-                        pattern="[A-Z][A-Za-z0-9 ]*"
-                        value={title}
-                        onChange={handleInputChange}
-                    />
-                    <button 
-                        type="button" 
-                        className={css.inputBtn} 
-                        onClick={() => setTitle('')}
-                    >
-                        <MdClose style={{width: 18, height: 18}} />
-                    </button>
-                </div>
+                <TitleInput 
+                    title={title}
+                    reset={() => setTitle('')}
+                    handleInputChange={handleInputChange}
+                />
                 
-                <div className={css.enabled}>
-                    <label 
-                        className={css.label}  
-                        htmlFor="description"
-                    >
-                        Description
-                    </label>
-                    <textarea
-                        className={css.textarea} 
-                        type="text"
-                        id="description" 
-                        name="description" 
-                        value={description}
-                        onChange={handleInputChange}
-                    ></textarea>
-                    <button 
-                        type="button" 
-                        className={css.inputBtn} 
-                        onClick={() => setDescription('')}
-                    >
-                        <MdClose style={{width: 18, height: 18}} />
-                    </button>
-                </div>
+                <DescriptionInput 
+                    description={description}
+                    reset={() => setDescription('')}
+                    handleInputChange={handleInputChange}   
+                />
                 
-                <div className={css.enabled} 
-                    style={{position: "relative"}}
-                >
-                    <label 
-                        className={css.label} 
-                        htmlFor="date"
-                    >
-                        Select date
-                    </label>
-                    <input 
-                        className={css.input} 
-                        type="text"
-                        id="date" 
-                        name="date" 
-                        // pattern="/^\d{2}\.\d{2}\.\d{4}$/"
-                        placeholder="Select date"
-                        value={date}
-                        onChange={handleInputChange}
-                        onClick={() => setShowDatePicker(true)}
-                        style={{caretColor: "transparent"}}
-                    />
-                    <button 
-                        type="button" 
-                        className={css.inputBtn} 
-                        style={{width: "90%", justifyContent: "right"}}
-                        onClick={toggleDataPicker}
-                    >
-                        {showDatePicker 
-                            ? <MdKeyboardArrowUp style={{width: 24, height: 24}}/>
-                            : <MdKeyboardArrowDown style={{width: 24, height: 24}} />
-                        }
-                    </button>
-                    
-                    {showDatePicker && 
-                        <div className={css.calendar}>
-                            <DatePicker 
-                                startDate={startDate}
-                                onSelect={handleDateChange}
-                                onClose={handleCloseCalendar}
-                                onSave={handleSaveDate}
-                            />
-                        </div>
-                    }
-                </div>
+                <DatePickerInput 
+                    date={date}
+                    handleInputChange={handleInputChange}
+                    showDatePicker={showDatePicker}
+                    toggleMenu={toggleMenu}
+                    handleSaveDate={handleSaveDate}
+                />
 
-                <div className={css.enabled}>
-                    <label 
-                        className={css.label}  
-                        htmlFor="time"
-                    >
-                        Select time
-                    </label>
-                    <input 
-                        className={css.input} 
-                        type="time"
-                        id="time" 
-                        name="time" 
-                        value={time}
-                        onChange={handleInputChange}
-                    />
-                    <button 
-                        type="button" 
-                        className={css.inputBtn} 
-                        // onClick={() => setKeywords('')}
-                    >
-                        <MdKeyboardArrowDown style={{width: 24, height: 24}} />
-                    </button>
-                </div>
+                <TimePickerInput 
+                    time={time}
+                    handleInputChange={handleInputChange}
+                    showTimePicker={showTimePicker}
+                    toggleMenu={toggleMenu}
+                />
 
-                <div className={css.enabled}>
-                    <label 
-                        className={css.label}  
-                        htmlFor="location"
-                    >
-                        Location
-                    </label>
-                    <input 
-                        className={css.input} 
-                        type="text"
-                        id="location" 
-                        name="location" 
-                        pattern="[A-Z][A-Za-z ]*"
-                        value={place}
-                        onChange={handleInputChange}
-                    />
-                    <button 
-                        type="button" 
-                        className={css.inputBtn} 
-                        onClick={() => setPlace('')}
-                    >
-                        <MdClose style={{width: 18, height: 18}} />
-                    </button>
-                </div>
+                <LocationInput 
+                    place={place}
+                    reset={() => setPlace('')}
+                    handleInputChange={handleInputChange}
+                />
                 
-                {/* category - dropdown */}
-                <div className={css.disabled}>
-                    <label 
-                        className={css.label} 
-                        htmlFor="category"
-                    >
-                        Category
-                    </label>
-                    <input 
-                        className={css.input} 
-                        type="text"
-                        id="category" 
-                        name="category" 
-                        placeholder="Select category"
-                        disabled
-                        value={category}
-                        onChange={handleInputChange}
-                    />
-                    <button 
-                        type="button" 
-                        className={css.inputBtn} 
-                        // onClick={() => setKeywords('')}
-                    >
-                        <MdKeyboardArrowDown style={{width: 24, height: 24}} />
-                    </button>
-                </div>
+                <CategoryInput 
+                    category={category}
+                    handleInputChange={handleInputChange}
+                    showCategories={showCategories}
+                    toggleMenu={toggleMenu}
+                    handleSelect={handleSelectOption}
+                />
 
-                {/* image */}
-                <div className={css.disabled}>
-                    <label 
-                        className={css.label} 
-                        htmlFor="image"
-                    >
-                        Add picture
-                    </label>
-                    <input 
-                        className={css.input} 
-                        type="file"
-                        id="image" 
-                        name="image" 
-                        disabled
-                    />
-                    {/* div to overlap over the file input */}
-                    <div className={css.fakeInput}>
-                        <span className={css.fakePlaceholder}>Select image</span>
-                    </div>
-                    <button 
-                        type="button" 
-                        className={css.inputBtn} 
-                        // onClick={() => setImage('')}
-                    >
-                        <MdClose style={{width: 18, height: 18}} />
-                    </button>
-                </div>
-
-                {/* priority - dropdown*/}
-                <div className={css.disabled}>
-                    <label 
-                        className={css.label} 
-                        htmlFor="priority"
-                    >
-                        Priority
-                    </label>
-                    <input 
-                        className={css.input} 
-                        type="text"
-                        id="priority" 
-                        name="priority" 
-                        placeholder="Select priority"
-                        disabled
-                        value={priority}
-                        onChange={handleInputChange}
-                    />
-                    <button 
-                        type="button" 
-                        className={css.inputBtn} 
-                        // onClick={() => setKeywords('')}
-                    >
-                        <MdKeyboardArrowDown style={{width: 24, height: 24}} />
-                    </button>
-                </div>
+                <ImageInput />
+                
+                <PriorityInput 
+                    priority={priority}
+                    handleInputChange={handleInputChange}
+                    showPriorities={showPriorities}
+                    toggleMenu={toggleMenu}
+                    handleSelect={handleSelectOption}
+                />
             </div>
         
             {/* adjust text depending on the location */}

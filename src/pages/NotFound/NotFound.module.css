@@ -1,0 +1,43 @@
+.message {
+    width: 272px;
+    margin: 54px auto 136px auto;
+    padding: 40px 16px;
+
+    border-radius: 8px;
+    background: var(--white);
+    box-shadow: 2px 4px 9px 0px rgba(166, 141, 174, 0.28);
+
+    text-align: center;
+
+    @media screen and (min-width: 768px) {
+        width: 688px;
+        padding: 40px 24px;
+    }
+
+    @media screen and (min-width: 1280px) {
+        width: 900px;
+        padding: 40px 40px 54px 40px;
+    }
+}
+
+.subtitle {
+    color: var(--purple);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: normal;
+
+    @media screen and (min-width: 768px) {
+        font-size: 24px;
+    }
+}
+
+.note {
+    color: var(--hover-black);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: normal;
+
+    @media screen and (min-width: 768px) {
+        font-size: 20px;
+    }
+}

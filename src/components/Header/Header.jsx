@@ -1,19 +1,21 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { CiSearch } from "react-icons/ci";
-import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
+import { MdClose, MdKeyboardArrowDown } from "react-icons/md";
+import { langOptions } from 'utils/options';
 import css from "./Header.module.css";
-import { MdClose } from "react-icons/md";
-import { AiOutlineDown } from "react-icons/ai";
 
 export const Header = () => {
-    const [keywords, setKeywords] = useState('');
+    const defaultOption = langOptions[0];
 
-    const options = [
-        'UK', 'UA', 'EN'
-    ];
-    const defaultOption = options[0];
+    const [keywords, setKeywords] = useState('');
+    const [lang, setLang] = useState(defaultOption);
+    const [showOptions, setShowOptions] = useState(false);
+
+    const handleLanguageSelect = (e) => {
+        setLang(e.target.innerText);
+        setShowOptions(false);
+    }
 
     return (
         <header className={css.header}>
@@ -22,16 +24,34 @@ export const Header = () => {
                     <h1 className={css.title}>Event Planner</h1>
                 </Link>
                 
-                <Dropdown 
-                    options={options} 
-                    value={defaultOption} 
-                    className={css.dropdown}
-                    controlClassName={css.control}
-                    placeholderClassName={css.placeholder}
-                    menuClassName={css.menu}
-                    arrowClassName={css.arrow}
-                    arrowOpen={<AiOutlineDown />}
-                />
+                <div className={css.dropdown}>
+                    <span className={css.language}>
+                        {lang}
+                    </span>
+                    <button 
+                        type="button"
+                        className={css.arrow}
+                        onClick={() => setShowOptions(prevState => !prevState)}
+                    >
+                        <MdKeyboardArrowDown style={{width: 18, height: 18}} />
+                    </button>
+
+                    {showOptions &&
+                        <ul className={css.options}>
+                            {langOptions.map(o => 
+                                <button 
+                                    type="button" 
+                                    key={o}
+                                    className={css.langOption}
+                                    onClick={handleLanguageSelect}
+                                >
+                                    {o}
+                                </button>
+                            )}
+                        </ul>
+                    }
+                    
+                </div>
 
                 <div className={css.search}>
                     <label className={css.label} htmlFor="search">
