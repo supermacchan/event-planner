@@ -38,7 +38,7 @@ const Event = () => {
 
             {isLoading && <Loader />}
 
-            {event && 
+            {!isLoading && event && 
                 <div className={css.event}>
                     <PageTitle title={event.name} />
                     <EventInfo event={event}/>

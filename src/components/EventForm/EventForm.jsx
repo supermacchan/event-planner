@@ -152,10 +152,12 @@ export const EventForm = ({ event }) => {
     }
 
     const handleSaveTime = (hour, minute, ampm) => {
+        if (hour === '01' && minute === '00' && ampm === 'am') {
+            return;
+        }
+
         const newTime = `${hour}:${minute} ${ampm.toLowerCase()}`;
         setTime(newTime);
-        console.log('Shalala!');
-        console.log(newTime)
     }
 
     const collectData = () => {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { hours, minutes, debounce } from "utils/timePicker";
 import css from "./TimePicker.module.css";
 
@@ -6,13 +6,13 @@ export const TimePicker = ({
     initialTime,
     saveTime
 }) => {
-    const [selectedHour, setselectedHour] = useState('01');
-    const [selectedMinute, setSelectedMinute] = useState('00');
-    const [selectedAmpm, setSelectedAmpm] = useState('am');
-
     const [hour, setHour] = useState('01');
     const [minute, setMinute] = useState('00');
     const [ampm, setAmpm] = useState('am');
+
+    const hourContainerRef = useRef(null);
+    const minuteContainerRef = useRef(null);
+    const ampmContainerRef = useRef(null);
 
     let selectedButton = null;
     let currentScrollContainer = null;
@@ -24,37 +24,11 @@ export const TimePicker = ({
         columns.forEach(column => {
             column.addEventListener('scroll', debouncedScroll);
 
-            const buttons = column.querySelectorAll('.time-picker-button');
-            buttons.forEach(button => {
-                switch (column.id) {
-                    case "hours":
-                        if (button.innerText === selectedHour) {
-                            button.classList.add(css.selected);
-                        } else {
-                            button.classList.remove(css.selected);
-                        }
-                        break;
-                    case "minutes":
-                        if (button.innerText === selectedMinute) {
-                            button.classList.add(css.selected);
-                        } else {
-                            button.classList.remove(css.selected);
-                        }
-                        break;
-                    case "ampm":
-                        if (button.innerText === selectedAmpm) {
-                            button.classList.add(css.selected);
-                        } else {
-                            button.classList.remove(css.selected);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            })
-            // temp
-            // const firstButton = column.querySelector('.time-picker-button');
-            // firstButton.classList.add(css.selected);
+            // Set the default selected button for "/create" page
+            if(!initialTime) {
+                const firstButton = column.querySelector('.time-picker-button');
+                firstButton.classList.add(css.selected);
+            }
         })
 
         return () => {
@@ -72,15 +46,38 @@ export const TimePicker = ({
     useEffect(() => {
         // If the parent component provided an initial time, set the default selected time
         if (initialTime) {
-            console.log(initialTime);
             const [initTime, initAmpm] = initialTime.split(' ');
             const [initHour, initMinute] = initTime.split(':');
-            setselectedHour(initHour);
-            setSelectedMinute(initMinute);
-            setSelectedAmpm(initAmpm);
+            setHour(initHour);
+            setMinute(initMinute);
+            setAmpm(initAmpm);
+
+            // Scroll to and mark the initial time button in each container
+            scrollToAndMarkInitialButton(initHour, hourContainerRef.current);
+            scrollToAndMarkInitialButton(initMinute, minuteContainerRef.current);
+            scrollToAndMarkInitialButton(initAmpm, ampmContainerRef.current);
         } 
-      }, [initialTime]);
+        // eslint-disable-next-line
+      }, []);
     
+      const scrollToAndMarkInitialButton = (value, containerRef) => {
+        if (!containerRef) return;
+    
+        const buttons = containerRef.querySelectorAll('.time-picker-button');
+        buttons.forEach((button) => {
+          if (button.innerText.toLowerCase() === value) {
+            button.classList.add(css.selected);
+    
+            // Center the selected button in the container
+            const containerCenter = containerRef.clientHeight / 2;
+            const selectedButtonTop = button.offsetTop;
+            const scrollOffset = selectedButtonTop - containerCenter + button.clientHeight / 2;
+            containerRef.scrollTop = scrollOffset;
+          } else {
+            button.classList.remove(css.selected);
+          }
+        });
+      };
 
     const onContainerScroll = (event) => {
         currentScrollContainer = event.target;
@@ -108,7 +105,7 @@ export const TimePicker = ({
         }
     }
 
-    const markCentralButton = (buttons, containerScrollTop, centralOffset) => {
+    const markCentralButton = async (buttons, containerScrollTop, centralOffset) => {
         buttons.forEach((button) => {
             const buttonTop = button.getBoundingClientRect().top - containerScrollTop;
             const buttonBottom = buttonTop + button.clientHeight;
@@ -121,12 +118,15 @@ export const TimePicker = ({
                 switch (currentScrollContainer.id) {
                     case "hours":
                         setHour(selectedButton.innerText);
+                        saveTime(selectedButton.innerText, minute, ampm);
                         break;
                     case "minutes":
                         setMinute(selectedButton.innerText);
+                        saveTime(hour, selectedButton.innerText, ampm);
                         break;
                     case "ampm":
                         setAmpm(selectedButton.innerText);
+                        saveTime(hour, minute, selectedButton.innerText);
                         break;
                     default:
                         break;
@@ -144,7 +144,11 @@ export const TimePicker = ({
             id="time-picker"
             className={css.container} 
         >
-            <ul className={`${css.timeOptions} time-picker-column`} id="hours">
+            <ul 
+                className={`${css.timeOptions} time-picker-column`} 
+                id="hours"
+                ref={hourContainerRef}
+            >
                 {hours.map(h => 
                     <li key={h}>
                         <button 
@@ -158,7 +162,11 @@ export const TimePicker = ({
 
             <span className={css.divider}>:</span>
 
-            <ul className={`${css.timeOptions} time-picker-column`} id="minutes">
+            <ul 
+                className={`${css.timeOptions} time-picker-column`} 
+                id="minutes"
+                ref={minuteContainerRef}
+            >
                 {minutes.map(m => 
                     <li key={m}>
                         <button 
@@ -170,7 +178,11 @@ export const TimePicker = ({
                 )}
             </ul>
 
-            <ul className={`${css.ampm} time-picker-column`} id="ampm">
+            <ul 
+                className={`${css.ampm} time-picker-column`} 
+                id="ampm"
+                ref={ampmContainerRef}
+            >
                 <li>
                     <button 
                         type="button"

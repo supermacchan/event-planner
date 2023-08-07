@@ -38,7 +38,7 @@ const Edit = () => {
 
             {isLoading && <Loader />}
             
-            {event && <EventForm event={event} />}
+            {!isLoading && event && <EventForm event={event} />}
         </Main>
     )
 }
