@@ -24,6 +24,8 @@
     @media screen and (min-width: 1280px) {
         display: inline-flex;
         gap: 20px;
+        max-width: 588px;
+        margin-left: auto;
     }
 }
 
