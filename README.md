@@ -2,10 +2,23 @@
 
 Created with the use of a [personal react project template](https://github.com/supermacchan/react-project-template) bootstrapped with [Create React App](https://github.com/facebook/create-react-app) with autodeploy to GH-pages.
 
-## Live page
+### Live page
 
 The live page for this project is available via the following link:
 https://supermacchan.github.io/event-planner/
+
+### The website currently allows:
+- browsing through available events
+- opening an event page to see more details about the selected event
+- creating new events
+- editing the existing events
+- deleting events
+- filtering the events by categories
+- filtering the events by title via entering the keywords into the search form in the top bar
+
+The website has adaptive [design](https://www.figma.com/file/HxMha50XQyTUVGxOsIgDrM/Event-Planner_%D1%82%D0%B5%D1%81%D1%82%D0%BE%D0%B2%D0%B5?type=design&mode=design&t=FsffPSkyZIhIcwrG-0), developed for all types of devices (mobile phones, tablets and desktops).
+
+The website has potential for some other features, like more sorting optons, pagination of the list of events, support of other languages, authorization and personal events. These (and some others) are included in a roadmap for further development of this project.
 
 -----------------
 
