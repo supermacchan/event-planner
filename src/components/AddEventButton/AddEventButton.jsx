@@ -1,5 +1,4 @@
 import { Link, useLocation } from 'react-router-dom';
-
 import { AiOutlinePlus } from "react-icons/ai";
 import css from "./AddEventButton.module.css";
 

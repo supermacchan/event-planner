@@ -157,7 +157,6 @@ export const TimePicker = ({
                         <button 
                             type="button"
                             className={`${css.timeButton} time-picker-button`}
-                            // onClick={e => setHour(e.target.innerText)}
                         >{h}</button>
                     </li>
                 )}
@@ -175,7 +174,6 @@ export const TimePicker = ({
                         <button 
                             type="button"
                             className={`${css.timeButton} time-picker-button`}
-                            // onClick={e => setMinute(e.target.innerText)}
                         >{m}</button>
                     </li>
                 )}
@@ -190,7 +188,6 @@ export const TimePicker = ({
                     <button 
                         type="button"
                         className={`${css.ampmButton} time-picker-button`}
-                        // onClick={e => setAmpm(e.target.innerText)}
                     >AM</button>
                 </li>
                 <li>

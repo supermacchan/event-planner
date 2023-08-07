@@ -56,6 +56,7 @@ export const EventForm = ({ event }) => {
             time, 
             photo 
         } = event;
+        
         setTitle(name);
         setDescription(description);
         setDate(date);

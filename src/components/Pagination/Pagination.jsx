@@ -22,6 +22,9 @@ export const Pagination = ({ isMobile }) => {
         setCurrentPage(Number(e.target.innerHTML));
     }
 
+    // at this time the pagination is not yet functional
+    // therefore the markup below is a mock-up 
+    // for the purposes of following the provided style template
     return (
         <div className={css.pagination}>
             <div className={css.container}>

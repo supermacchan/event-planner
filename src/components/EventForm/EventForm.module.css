@@ -151,6 +151,7 @@
     cursor: pointer;
 
     padding: 16px 12px;
+    margin-top: 40px;
 
     border: none;
     border-radius: 8px;
@@ -166,7 +167,6 @@
     @media screen and (min-width: 768px) {
         align-self: flex-end;
         width: 193px;
-        margin-top: 40px;
     }
 
     @media screen and (min-width: 1280px) {

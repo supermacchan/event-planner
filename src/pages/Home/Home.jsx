@@ -34,7 +34,7 @@ const Home = () => {
     const normalizedCategory = category.toLowerCase();
     const categorizedEvents = (normalizedCategory === "category")
     ? events
-    : events.filter(event => event.category.toLowerCase().includes(normalizedCategory));
+    : events.filter(event => event.category.toLowerCase() === normalizedCategory);
 
     // sort by search keywords
     const normalizedKeywords = keywords.toLowerCase();
