@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { filterByCategory } from "redux/filterSlice";
 import { CiFilter } from "react-icons/ci";
 import { LiaSlidersHSolid } from "react-icons/lia";
 import { MdArrowUpward } from "react-icons/md";
@@ -10,6 +12,11 @@ export const Filters = ({ isMobile }) => {
     const [category, setCategory] = useState("Category");
     const [showCategory, setShowCategory] = useState(false);
     const [showSortingOptions, setShowSortingOptions] = useState(false);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(filterByCategory(category));
+    }, [category, dispatch]);
 
     const handleCategoryClick = () => {
         setShowCategory(prevState => !prevState);

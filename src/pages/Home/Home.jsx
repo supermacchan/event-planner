@@ -2,7 +2,12 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { operations } from "redux/operations";
-import { selectEvents, selectIsLoading } from "redux/selectors";
+import { 
+    selectEvents, 
+    selectIsLoading, 
+    selectCategory,
+    selectKeywords
+} from "redux/selectors";
 
 import { Loader } from "components/Loader/Loader";
 import { Main } from "components/Main/Main";
@@ -14,16 +19,27 @@ import { AiOutlinePlus } from "react-icons/ai";
 import css from "./Home.module.css";
 
 const Home = () => {
-    // const [events, setEvents] = useState([]);
     const [windowWidth, setWindowWidth] = useState(null);
     const [isMobile, setIsMobile] = useState(true);
     const [eventsPerPage, setEventsPerPage] = useState(6);
 
     const events = useSelector(selectEvents);
     const isLoading = useSelector(selectIsLoading);
+    const category = useSelector(selectCategory);
+    const keywords = useSelector(selectKeywords);
 
     const location = useLocation();
     const dispatch = useDispatch();
+
+    // sort by categories
+    const normalizedCategory = category.toLowerCase();
+    const categorizedEvents = (normalizedCategory === "category")
+    ? events
+    : events.filter(event => event.category.toLowerCase().includes(normalizedCategory));
+
+    // sort by search keywords
+    const normalizedKeywords = keywords.toLowerCase();
+    const filteredEvents = categorizedEvents.filter(event => event.name.toLowerCase().includes(normalizedKeywords));
 
     // tracking window size (for changing screen orientation on mobile devices)
     useEffect(() => {
@@ -90,10 +106,14 @@ const Home = () => {
             {isLoading && <Loader />}
             
             <ul className={css.cardList}> 
-                {events.length > 0 && events.map(event => <li key={event.id}><EventCard event={event}/></li>)}
+                {filteredEvents.length > 0 && filteredEvents.map(event => 
+                    <li key={event.id}>
+                        <EventCard event={event}/>
+                    </li>
+                )}
             </ul>
 
-            {events.length >= eventsPerPage &&
+            {filteredEvents.length >= eventsPerPage &&
                 <Pagination isMobile={isMobile}/>
             }
             

@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useLocation } from "react-router-dom";
+import { filterByKeywords } from 'redux/filterSlice';
 import { CiSearch } from "react-icons/ci";
 import { MdClose, MdKeyboardArrowDown } from "react-icons/md";
 import { langOptions } from 'utils/options';
@@ -7,6 +10,8 @@ import css from "./Header.module.css";
 
 export const Header = () => {
     const defaultOption = langOptions[0];
+    const dispatch = useDispatch();
+    const location = useLocation();
 
     const [keywords, setKeywords] = useState('');
     const [lang, setLang] = useState(defaultOption);
@@ -17,10 +22,21 @@ export const Header = () => {
         setShowOptions(false);
     }
 
+    const changeKeywords = e => {
+        setKeywords(e.target.value)
+        dispatch(filterByKeywords(e.target.value));
+    };
+
+    const handleLogoClick = () => {
+        if (location.pathname === '/') {
+            window.location.reload();
+        }
+    }
+
     return (
         <header className={css.header}>
             <div className={css.container}>
-                <Link to={"/"}>
+                <Link to={"/"} onClick={handleLogoClick}>
                     <h1 className={css.title}>Event Planner</h1>
                 </Link>
                 
@@ -62,7 +78,7 @@ export const Header = () => {
                         name="search"
                         placeholder="Search by keywords"
                         value={keywords}
-                        onChange={(e) => setKeywords(e.target.value)}
+                        onChange={changeKeywords}
                     />
                     <button 
                         type="button" 
