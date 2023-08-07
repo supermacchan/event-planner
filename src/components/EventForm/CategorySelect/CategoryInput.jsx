@@ -1,7 +1,9 @@
 import { useRef } from "react";
-import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
+
 import { nanoid } from "nanoid";
 import { categories } from "utils/options";
+
+import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import css from "../EventForm.module.css";
 
 export const CategoryInput = ({

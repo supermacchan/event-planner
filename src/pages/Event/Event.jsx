@@ -3,13 +3,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { operations } from "redux/operations";
 import { selectCurrent, selectIsLoading, selectError } from "redux/selectors";
-import { toast } from 'react-toastify';
 
 import { Loader } from "components/Loader/Loader";
 import { Main } from "components/Main/Main";
 import { BackButton } from "components/BackButton/BackButton";
 import { PageTitle } from "components/PageTitle/PageTitle";
 import { EventInfo } from 'components/EventInfo/EventInfo';
+
+import { toast } from 'react-toastify';
 import css from "./Event.module.css";
 
 const Event = () => {

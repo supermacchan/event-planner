@@ -184,12 +184,10 @@ export const EventForm = ({ event }) => {
     }
 
     const formValidation = () => {
-        console.log("Here!")
         const form =  document.getElementById("form");
         const inputs = form.querySelectorAll("input:not(:disabled)");
         
         const validate = Array.from(inputs).every(i => i.value.trim());
-        console.log(validate);
 
         if (!validate) {
             inputs.forEach(function(input) {
@@ -218,7 +216,6 @@ export const EventForm = ({ event }) => {
         }
 
         const newEvent = collectData();
-        console.log(newEvent);
 
         if (location.pathname === '/create') {
             await dispatch(operations.createEvent(newEvent));
@@ -297,7 +294,7 @@ export const EventForm = ({ event }) => {
             </div>
         
             {/* adjusts text depending on the location */}
-            <button type="submit" className={css.button} onClick={handleFormSubmit}>
+            <button type="submit" className={css.button}>
                 {
                     location.pathname === '/create'
                     ? "Add event"

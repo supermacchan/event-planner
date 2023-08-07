@@ -9,9 +9,9 @@ export const DatePicker = ({
     startDate, 
     onSelect,
     onClose,
-    onSave,
-    onDayClick
+    onSave
 }) => {
+    // Custom classnames for day-picker styling
     const classNames = {
         caption: css.caption,
         caption_label: css.month,

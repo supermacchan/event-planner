@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { operations } from "redux/operations";
 import { 
@@ -13,9 +12,10 @@ import { Loader } from "components/Loader/Loader";
 import { Main } from "components/Main/Main";
 import { PageTitle } from "components/PageTitle/PageTitle";
 import { Filters } from "components/Filters/Filters";
+import { AddEventButton } from "components/AddEventButton/AddEventButton";
 import { EventCard } from "components/EventCard/EventCard";
 import { Pagination } from "components/Pagination/Pagination";
-import { AiOutlinePlus } from "react-icons/ai";
+
 import css from "./Home.module.css";
 
 const Home = () => {
@@ -28,7 +28,6 @@ const Home = () => {
     const category = useSelector(selectCategory);
     const keywords = useSelector(selectKeywords);
 
-    const location = useLocation();
     const dispatch = useDispatch();
 
     // sort by categories
@@ -40,6 +39,11 @@ const Home = () => {
     // sort by search keywords
     const normalizedKeywords = keywords.toLowerCase();
     const filteredEvents = categorizedEvents.filter(event => event.name.toLowerCase().includes(normalizedKeywords));
+
+    // fetch data
+    useEffect(() => {
+        dispatch(operations.fetchAllEvents())
+    }, [dispatch]);
 
     // tracking window size (for changing screen orientation on mobile devices)
     useEffect(() => {
@@ -69,11 +73,6 @@ const Home = () => {
         }
     }, [windowWidth]);
 
-    // fetch data
-    useEffect(() => {
-        dispatch(operations.fetchAllEvents())
-    }, [dispatch])
-
     const handleResize = () => {
         setWindowWidth(window.innerWidth);
     };
@@ -81,19 +80,10 @@ const Home = () => {
     return (
         <Main>
             <div className={css.topBar}>
+
                 <div className={css.menu}>
                     <Filters isMobile={isMobile} />
-                    <Link 
-                        to={"/create"} 
-                        state={{ from: location.state?.from ?? "/" }}
-                    >
-                        <button type="button" className={css.addButton}>
-                            <AiOutlinePlus 
-                                style={{width: 24, height: 24}} 
-                            /> 
-                            <span className={css.buttonText}>Add new event</span>
-                        </button>
-                    </Link>
+                    <AddEventButton />
                 </div>
 
                 {!isMobile && 
