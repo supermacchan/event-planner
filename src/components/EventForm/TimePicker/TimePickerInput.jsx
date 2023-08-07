@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { TimePicker } from "./TimePicker";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import css from "../EventForm.module.css";
@@ -9,6 +10,14 @@ export const TimePickerInput = ({
     toggleMenu,
     saveTime
 }) => {   
+    const timePickerInputRef = useRef(null);
+
+    const handleSelectTime = () => {
+        if (timePickerInputRef.current) {
+            timePickerInputRef.current.setCustomValidity('');
+        }
+    }
+
     return (
         <div className={css.enabled}>
             <label 
@@ -27,6 +36,7 @@ export const TimePickerInput = ({
                 onChange={handleInputChange}
                 onClick={() => toggleMenu("time")}
                 style={{caretColor: "transparent"}}
+                ref={timePickerInputRef}
             />
             <button 
                 type="button" 
@@ -44,6 +54,7 @@ export const TimePickerInput = ({
                 <TimePicker 
                     initialTime={time}
                     saveTime={saveTime}
+                    handleSelectTime={handleSelectTime}
                 />
             }
         </div>

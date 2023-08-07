@@ -4,7 +4,8 @@ import css from "./TimePicker.module.css";
 
 export const TimePicker = ({ 
     initialTime,
-    saveTime
+    saveTime,
+    handleSelectTime
 }) => {
     const [hour, setHour] = useState('01');
     const [minute, setMinute] = useState('00');
@@ -40,7 +41,9 @@ export const TimePicker = ({
     useEffect(() => {
         return () => {
             saveTime(hour, minute, ampm);
+            handleSelectTime();
         }
+    // eslint-disable-next-line
     }, [hour, minute, ampm, saveTime])
 
     useEffect(() => {

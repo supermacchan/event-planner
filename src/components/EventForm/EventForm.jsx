@@ -71,12 +71,14 @@ export const EventForm = ({ event }) => {
         switch (e.target.name) {
             case "title": 
                 setTitle(e.target.value);
+                e.target.setCustomValidity("");
                 break;
             case "description": 
                 setDescription(e.target.value);
                 break;
             case "location": 
                 setPlace(e.target.value);
+                e.target.setCustomValidity("");
                 break;
             case "category": 
                 setCategory(e.target.value);
@@ -182,6 +184,7 @@ export const EventForm = ({ event }) => {
     }
 
     const formValidation = () => {
+        console.log("Here!")
         const form =  document.getElementById("form");
         const inputs = form.querySelectorAll("input:not(:disabled)");
         
@@ -294,7 +297,7 @@ export const EventForm = ({ event }) => {
             </div>
         
             {/* adjusts text depending on the location */}
-            <button type="submit" className={css.button}>
+            <button type="submit" className={css.button} onClick={handleFormSubmit}>
                 {
                     location.pathname === '/create'
                     ? "Add event"

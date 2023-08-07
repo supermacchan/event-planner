@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { nanoid } from "nanoid";
 import { priorities } from "utils/options";
@@ -10,6 +11,16 @@ export const PriorityInput = ({
     toggleMenu,
     handleSelect
 }) => {
+    const priorityInputRef = useRef(null);
+
+    const handleCategorySelect = (e) => {
+        handleSelect("priority", e);
+
+        if (priorityInputRef.current) {
+            priorityInputRef.current.setCustomValidity('');
+        }
+    }
+
     return (
         <div className={css.enabled}>
             <label 
@@ -27,6 +38,7 @@ export const PriorityInput = ({
                 value={priority}
                 onChange={handleInputChange}
                 style={{caretColor: "transparent"}}
+                ref={priorityInputRef}
             />
             <button 
                 type="button" 
@@ -47,7 +59,7 @@ export const PriorityInput = ({
                             type="button" 
                             key={nanoid()}
                             className={css.popUpOption}
-                            onClick={(e) => handleSelect("priority", e)}
+                            onClick={handleCategorySelect}
                         >
                             {p}
                         </button>

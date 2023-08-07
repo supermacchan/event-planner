@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { nanoid } from "nanoid";
 import { categories } from "utils/options";
@@ -10,6 +11,16 @@ export const CategoryInput = ({
     toggleMenu,
     handleSelect
 }) => {
+    const categoryInputRef = useRef(null);
+
+    const handleCategorySelect = (e) => {
+        handleSelect("category", e);
+
+        if (categoryInputRef.current) {
+            categoryInputRef.current.setCustomValidity('');
+        }
+    }
+
     return (
         <div className={css.enabled}>
             <label 
@@ -27,6 +38,7 @@ export const CategoryInput = ({
                 value={category}
                 onChange={handleInputChange}
                 style={{caretColor: "transparent"}}
+                ref={categoryInputRef}
             />
             <button 
                 type="button" 
@@ -47,7 +59,7 @@ export const CategoryInput = ({
                             type="button" 
                             key={nanoid()}
                             className={css.popUpOption}
-                            onClick={(e) => handleSelect("category", e)}
+                            onClick={handleCategorySelect}
                         >
                             {c}
                         </button>

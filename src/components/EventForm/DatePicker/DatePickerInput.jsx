@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { DatePicker } from "./DatePicker";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import css from "../EventForm.module.css";
@@ -11,9 +11,18 @@ export const DatePickerInput = ({
     handleSaveDate
 }) => {
     const [startDate, setStartDate] = useState(new Date());
+    const datePickerInputRef = useRef(null);
 
     const handleDateChange = (date) => {
         setStartDate(date);
+    }
+
+    const handleSelectDate = () => {
+        handleSaveDate(startDate);
+
+        if (datePickerInputRef.current) {
+            datePickerInputRef.current.setCustomValidity('');
+        }
     }
 
     return (
@@ -36,6 +45,7 @@ export const DatePickerInput = ({
                 onChange={handleInputChange}
                 onClick={() => toggleMenu("date")}
                 style={{caretColor: "transparent"}}
+                ref={datePickerInputRef}
             />
             <button 
                 type="button" 
@@ -55,7 +65,7 @@ export const DatePickerInput = ({
                         startDate={startDate}
                         onSelect={handleDateChange}
                         onClose={() => toggleMenu("date")}
-                        onSave={() => handleSaveDate(startDate)}
+                        onSave={handleSelectDate}
                     />
                 </div>
             }
